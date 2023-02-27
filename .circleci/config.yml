@@ -1,26 +1,123 @@
-# Use the latest 2.1 version of CircleCI pipeline process engine.
-# See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
 
-# Define a job to be invoked later in a workflow.
-# See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
-  say-hello:
-    # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
-    # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
+  build:
     docker:
-      - image: cimg/base:stable
-    # Add steps to the job
-    # See: https://circleci.com/docs/2.0/configuration-reference/#steps
+      - image: circleci/node:16.13.1
+    working_directory: ~/repo
     steps:
       - checkout
       - run:
-          name: "Say hello"
-          command: "echo Hello, World!"
+          name: "Show current branch"
+          command: "echo ${CURRENT_BRANCH}"
+      - restore_cache:
+          key:
+            - app-{{ checksum "package.json" }}
+            - app-
+       - run:
+          name: Install dependencies
+          command: npm install
+      - save_cache:
+          paths:
+            - node_modules
+          key: 
+            - app-{{ checksum "package.json" }}
+  deploy-to-aws-cloudfront:
+    docker:
+      - image: circleci/node:16.13.1
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run:
+          name: Show current branch
+          command: "echo ${CURRENT_BRANCH}"
+      - run:
+          name: Install AWS CLI
+          working_directory: /
+          command: |
+           sudo apt-get -t -qq update
+           sudo apt-get install -y awscli
+           sudo apt-get install -y python-pip python-dev build-essential
+      - run:
+          name: Build project
+          command: |
+            npm install
+            npm run build
+            cd build
+            zip ../build.zip -r * .[^.]*
+            echo "Build successfull" 
+      - run:
+          name: Deploy to AWS s3
+          command: |
+          if ["${CURRENT_BRANCH}" == "master"]
+          then
+            aws --region ${AWS_REGION} s3 sync ~/repo/build s3://${CINE_PRODUCTION} --delete
+          elif ["${CURRENT_BRANCH}" == "staging"]
+          then  
+            aws --region ${AWS_REGION} s3 sync ~/repo/build s3://${CINE_STAGING} --delete
+          else
+            aws --region ${AWS_REGION} s3 sync ~/repo/build s3://${CINE_DEVELOPMENT} --delete
+          fi
 
-# Invoke jobs via workflows
-# See: https://circleci.com/docs/2.0/configuration-reference/#workflows
+    deploy-to-aws-cloudfront:
+    docker:
+      - image: circleci/node:16.13.1
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run:
+          name: Show current branch
+          command: "echo ${CURRENT_BRANCH}"
+      - run:
+          name: Install AWS CLI
+          working_directory: /
+          command: |
+           sudo apt-get -t -qq update
+           sudo apt-get install -y awscli
+           sudo apt-get install -y python-pip python-dev build-essential
+      - run:
+          name: Install AWS CLI
+          command: |
+            npm install
+            npm run build
+            cd build
+            zip ../build.zip -r * .[^.]*
+            echo "Build successfull" 
+      - run:
+          name: Deploy to AWS Cloudfront
+          command: |
+          aws configure set preview.cloudfront
+          if ["${CURRENT_BRANCH}" == "master"]
+          then
+            aws cloudfront create-invalidation -distribution-id ${PROD_DISTRIBUTION_ID} --path /\*
+          elif ["${CURRENT_BRANCH}" == "staging"]
+          then  
+            aws cloudfront create-invalidation -distribution-id ${STAG_DISTRIBUTION_ID} --path /\*
+          else
+            aws cloudfront create-invalidation -distribution-id ${DEV_DISTRIBUTION_ID} --path /\*
+          fi
+          
 workflows:
-  say-hello-workflow:
+  build_and_deploy:
     jobs:
-      - say-hello
+      - build
+      - deploy-to-aws-s3:
+        requires:
+          - build
+        filters:
+          branches:
+            only:
+              - develop
+              - staging
+              - master
+      - deploy-to-aws-cloudfront:
+        requires:  
+          - deploy-to-aws-s3
+        filters:
+          branches:
+            only:
+              - develop
+              - staging
+              - master
+
+
