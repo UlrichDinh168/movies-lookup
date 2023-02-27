@@ -24,7 +24,7 @@ jobs:
 
   deploy-to-aws-s3:
     docker:
-      - image: circleci/node:16.19.1
+      - image: cimg/node:19.7.0
     working_directory: ~/repo
     steps:
       - checkout
@@ -61,7 +61,7 @@ jobs:
 
   deploy-to-aws-cloudfront:
     docker:
-      - image: circleci/node:16.19.1
+      - image: cimg/node:19.7.0
     working_directory: ~/repo
     steps:
       - checkout
