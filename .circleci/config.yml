@@ -14,14 +14,51 @@ jobs:
           keys:
             - app-{{ checksum "package.json" }}
             - app-
-       - run:
+      - run:
           name: Install dependencies
           command: npm install
       - save_cache:
           paths:
             - node_modules
-          key: 
-            - app-{{ checksum "package.json" }}
+          key: app-{{ checksum "package.json" }}
+
+  deploy-to-aws-s3:
+    docker:
+      - image: circleci/node:16.13.1
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run:
+          name: Show current branch
+          command: "echo ${CURRENT_BRANCH}"
+      - run:
+          name: Install AWS CLI
+          working_directory: /
+          command: |
+            sudo apt-get -t -qq update
+            sudo apt-get install -y awscli
+            sudo apt-get install -y python-pip python-dev build-essential
+      - run:
+          name: Build project
+          command: |
+            npm install
+            npm run build
+            cd build
+            zip ../build.zip -r * .[^.]*
+            echo "Build successfull"
+      - run:
+          name: Deploy to AWS s3
+          command: |
+            if ["${CURRENT_BRANCH}" == "master"]
+            then
+              aws --region ${AWS_REGION} s3 sync ~/repo/build s3://${CINE_PRODUCTION} --delete
+            elif ["${CURRENT_BRANCH}" == "staging"]
+            then  
+              aws --region ${AWS_REGION} s3 sync ~/repo/build s3://${CINE_STAGING} --delete
+            else
+              aws --region ${AWS_REGION} s3 sync ~/repo/build s3://${CINE_DEVELOPMENT} --delete
+            fi
+
   deploy-to-aws-cloudfront:
     docker:
       - image: circleci/node:16.13.1
@@ -35,9 +72,9 @@ jobs:
           name: Install AWS CLI
           working_directory: /
           command: |
-           sudo apt-get -t -qq update
-           sudo apt-get install -y awscli
-           sudo apt-get install -y python-pip python-dev build-essential
+            sudo apt-get -t -qq update
+            sudo apt-get install -y awscli
+            sudo apt-get install -y python-pip python-dev build-essential
       - run:
           name: Build project
           command: |
@@ -45,79 +82,40 @@ jobs:
             npm run build
             cd build
             zip ../build.zip -r * .[^.]*
-            echo "Build successfull" 
-      - run:
-          name: Deploy to AWS s3
-          command: |
-          if ["${CURRENT_BRANCH}" == "master"]
-          then
-            aws --region ${AWS_REGION} s3 sync ~/repo/build s3://${CINE_PRODUCTION} --delete
-          elif ["${CURRENT_BRANCH}" == "staging"]
-          then  
-            aws --region ${AWS_REGION} s3 sync ~/repo/build s3://${CINE_STAGING} --delete
-          else
-            aws --region ${AWS_REGION} s3 sync ~/repo/build s3://${CINE_DEVELOPMENT} --delete
-          fi
-
-    deploy-to-aws-cloudfront:
-    docker:
-      - image: circleci/node:16.13.1
-    working_directory: ~/repo
-    steps:
-      - checkout
-      - run:
-          name: Show current branch
-          command: "echo ${CURRENT_BRANCH}"
-      - run:
-          name: Install AWS CLI
-          working_directory: /
-          command: |
-           sudo apt-get -t -qq update
-           sudo apt-get install -y awscli
-           sudo apt-get install -y python-pip python-dev build-essential
-      - run:
-          name: Install AWS CLI
-          command: |
-            npm install
-            npm run build
-            cd build
-            zip ../build.zip -r * .[^.]*
-            echo "Build successfull" 
+            echo "Build successfull"
       - run:
           name: Deploy to AWS Cloudfront
           command: |
-          aws configure set preview.cloudfront
-          if ["${CURRENT_BRANCH}" == "master"]
-          then
-            aws cloudfront create-invalidation -distribution-id ${PROD_DISTRIBUTION_ID} --path /\*
-          elif ["${CURRENT_BRANCH}" == "staging"]
-          then  
-            aws cloudfront create-invalidation -distribution-id ${STAG_DISTRIBUTION_ID} --path /\*
-          else
-            aws cloudfront create-invalidation -distribution-id ${DEV_DISTRIBUTION_ID} --path /\*
-          fi
-          
+            aws configure set preview.cloudfront
+            if ["${CURRENT_BRANCH}" == "master"]
+            then
+              aws cloudfront create-invalidation -distribution-id ${PROD_DISTRIBUTION_ID} --path /\*
+            elif ["${CURRENT_BRANCH}" == "staging"]
+            then  
+              aws cloudfront create-invalidation -distribution-id ${STAG_DISTRIBUTION_ID} --path /\*
+            else
+              aws cloudfront create-invalidation -distribution-id ${DEV_DISTRIBUTION_ID} --path /\*
+            fi
+
 workflows:
   build_and_deploy:
     jobs:
       - build
       - deploy-to-aws-s3:
-        requires:
-          - build
-        filters:
-          branches:
-            only:
-              - develop
-              - staging
-              - master
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - develop
+                - staging
+                - master
       - deploy-to-aws-cloudfront:
-        requires:  
-          - deploy-to-aws-s3
-        filters:
-          branches:
-            only:
-              - develop
-              - staging
-              - master
-
-
+          requires:
+            - deploy-to-aws-s3
+          filters:
+            branches:
+              only:
+                - develop
+                - staging
+                - master
