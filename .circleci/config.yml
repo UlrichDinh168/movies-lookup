@@ -16,7 +16,7 @@ jobs:
             - app-
       - run:
           name: Install dependencies
-          command: npm install
+          command: yarn
       - save_cache:
           paths:
             - node_modules
@@ -41,22 +41,22 @@ jobs:
       - run:
           name: Build project
           command: |
-            npm install
-            npm run build
-            cd build
-            zip ../build.zip -r * .[^.]*
+            yarn
+            yarn build
+            cd dist
+            zip ../dist.zip -r * .[^.]*
             echo "Build successfull"
       - run:
           name: Deploy to AWS s3
           command: |
             if ["${CURRENT_BRANCH}" == "master"]
             then
-              aws --region ${AWS_REGION} s3 sync ~/repo/build s3://${CINE_PRODUCTION} --delete
+              aws --region ${AWS_REGION} s3 sync ~/repo/dist s3://${CINE_PRODUCTION} --delete
             elif ["${CURRENT_BRANCH}" == "staging"]
             then  
-              aws --region ${AWS_REGION} s3 sync ~/repo/build s3://${CINE_STAGING} --delete
+              aws --region ${AWS_REGION} s3 sync ~/repo/dist s3://${CINE_STAGING} --delete
             else
-              aws --region ${AWS_REGION} s3 sync ~/repo/build s3://${CINE_DEVELOPMENT} --delete
+              aws --region ${AWS_REGION} s3 sync ~/repo/dist s3://${CINE_DEVELOPMENT} --delete
             fi
 
   deploy-to-aws-cloudfront:
@@ -78,10 +78,10 @@ jobs:
       - run:
           name: Build project
           command: |
-            npm install
-            npm run build
-            cd build
-            zip ../build.zip -r * .[^.]*
+            yarn
+            yarn build
+            cd dist
+            zip ../dist.zip -r * .[^.]*
             echo "Build successfull"
       - run:
           name: Deploy to AWS Cloudfront
