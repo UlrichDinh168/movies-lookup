@@ -3,7 +3,7 @@ version: 2.1
 executors:
   app-executors:
     docker:
-      - image: cimg/18.15.0-browsers
+      - image: cimg/18.15
     working_directory: ~/repo
 
 aliases:
