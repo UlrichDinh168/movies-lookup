@@ -1,5 +1,6 @@
 {
-  "name": "template-vite-react-ts-tailwind-v3",
+  "name": "fullstack-cicd-demo",
+  "private": true,
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",

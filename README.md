@@ -1,4 +1,4 @@
-# template-vite-react-ts-tailwind-v3
+# Fullstack CI/CD demo
 
 - **template of:** vite + react + typescript
 - **tailwindcss:** v3.x
