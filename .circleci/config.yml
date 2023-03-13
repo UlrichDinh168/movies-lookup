@@ -19,6 +19,11 @@ aliases:
     run:
       name: Install dependencies
       command: yarn
+  - &save-cache
+    save_cache:
+      paths:
+        - node_modules
+      key: app-{{ checksum "package.json" }}
   - &install-aws-cli
     run:
       name: Install AWS CLI
@@ -44,11 +49,17 @@ jobs:
       - *show-current-branch-name
       - *restore-cache
       - *install-dependencies
-      - save_cache:
-          paths:
-            - node_modules
-          key: app-{{ checksum "package.json" }}
+      - *save-cache
 
+  linting:
+    executor: app-executors
+    steps:
+      - checkout
+      - *show-current-branch-name
+      - *restore-cache
+      - run:
+          name: Run linting
+          command: yarn run lint
   deploy-to-aws-s3:
     executor: app-executors
     steps:
