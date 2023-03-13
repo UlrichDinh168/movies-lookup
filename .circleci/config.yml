@@ -3,7 +3,7 @@ version: 2.1
 executors:
   app-executors:
     docker:
-      - image: circleci/node:16.13.1
+      - image: cimg/18.15.0-browsers
     working_directory: ~/repo
 
 aliases:
