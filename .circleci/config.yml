@@ -8,7 +8,7 @@ executors:
     working_directory: ~/repo
   slack-executor:
     docker:
-      - image: 'cibuild/base:latest'
+      - image: 'cimg/base:stable'
     resource_class: small
 aliases:
   - &show-current-branch-name
@@ -126,7 +126,7 @@ jobs:
                 },
                 {
                   "type": "section",
-                  "field": [
+                  "fields": [
                     {
                       "type": "mrkdwn",
                       "text": "*Project:*\n $CIRCLE_PROJECT_REPONAME"
