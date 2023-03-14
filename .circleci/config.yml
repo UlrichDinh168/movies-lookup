@@ -120,7 +120,7 @@ jobs:
                   "type":"header",
                   "text": {
                     "type": "plain_text",
-                    "text": "<$CIRCLE_BUILD_URL|${CIRCLE_BRANCH} branch deployment to AWS S3 and CloudFront is complete.>",
+                    "text": "<$CIRCLE_BUILD_URL | ${CIRCLE_BRANCH} branch deployment to AWS S3 and CloudFront is complete.>",
                     "emoji": true
                   }
                 },
