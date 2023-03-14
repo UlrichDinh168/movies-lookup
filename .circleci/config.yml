@@ -152,7 +152,7 @@ jobs:
               ]
             }
   test:
-    executor: app-executor
+    executor: app-executors
     steps:
       - run: echo "test run"
 
