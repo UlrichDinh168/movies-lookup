@@ -166,48 +166,43 @@ jobs:
                 }
               ]
             }
-  test:
-    executor: app-executors
-    steps:
-      - run: echo "test run"
-
 workflows:
   build_and_deploy:
     jobs:
-      - test
-      - notify-via-slack:
+      - build
+      - linting:
           requires:
-            - test
+            - build
           filters:
             branches:
               only:
                 - develop
                 - staging
                 - master
-      # - deploy-to-aws-s3:
-      #     requires:
-      #       - build
-      #     filters:
-      #       branches:
-      #         only:
-      #           - develop
-      #           - staging
-      #           - master
-      # - deploy-to-aws-cloudfront:
-      #     requires:
-      #       - deploy-to-aws-s3
-      #     filters:
-      #       branches:
-      #         only:
-      #           - develop
-      #           - staging
-      #           - master
-      # - notify-via-slack :
-      #     requires:
-      #       - deploy-to-aws-s3
-      #     filters:
-      #       branches:
-      #         only:
-      #           - develop
-      #           - staging
-      #           - master
+      - deploy-to-aws-s3:
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - develop
+                - staging
+                - master
+      - deploy-to-aws-cloudfront:
+          requires:
+            - deploy-to-aws-s3
+          filters:
+            branches:
+              only:
+                - develop
+                - staging
+                - master
+      - notify-via-slack:
+          requires:
+            - deploy-to-aws-cloudfront
+          filters:
+            branches:
+              only:
+                - develop
+                - staging
+                - master
