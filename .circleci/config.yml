@@ -117,10 +117,10 @@ jobs:
             {
               "blocks": [
                 {
-                  "type":"header",
+                  "type": "header",
                   "text": {
                     "type": "plain_text",
-                    "text": "< $CIRCLE_BUILD_URL | ${CIRCLE_BRANCH} branch deployment to AWS S3 and CloudFront is complete.>",
+                    "text": "${CIRCLE_BRANCH} branch deployment to AWS S3 and CloudFront is complete.",
                     "emoji": true
                   }
                 },
@@ -137,7 +137,7 @@ jobs:
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "*When:*\n $(date + '%d/%m/%Y %T')"
+                      "text": "*When*: $(date +'%m/%d/%Y %T')"
                     },
                     {
                       "type": "mrkdwn",
@@ -146,6 +146,21 @@ jobs:
                     {
                       "type": "mrkdwn",
                       "text": "*Author:*\n $CIRCLE_PROJECT_USERNAME"
+                    }
+                  ]
+                },
+                {
+                  "type": "actions",
+                  "elements": [
+                    {
+                      "type": "button",
+                      "text": {
+                        "type": "plain_text",
+                        "emoji": true,
+                        "text": "View"
+                      },
+                      "style": "primary",
+                      "value": "$CIRCLE_BUILD_URL"
                     }
                   ]
                 }
