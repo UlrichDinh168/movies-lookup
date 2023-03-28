@@ -1,3 +1,4 @@
+# resource block use to create resource
 resource "aws_s3_bucket" "cine_react_s3_bucket" {
   bucket        = "${loca.prefix}-app-ulrich"
   force_destroy = true
@@ -5,7 +6,7 @@ resource "aws_s3_bucket" "cine_react_s3_bucket" {
   tags = local.common_tags
 }
 
-resource "aws_s3_bucket_acl" "name" {
+resource "aws_s3_bucket_acl" "cine_react_bucket_acl" {
   bucket = aws_s3_bucket.cine_react_s3_bucket.id
   acl    = "private"
 }
@@ -25,4 +26,33 @@ resource "aws_s3_bucket_versioning" "cine_react_bucket_versioning" {
   versioning_configuration {
     status = "Enabled"
   }
+}
+
+resource "aws_s3_bucket_website_configuration" "cine_react_bucket_website_config" {
+  bucket = aws_s3_bucket.cine_react_s3_bucket.id
+
+  index_document {
+    suffix = "index.html"
+  }
+  error_document {
+    key = "error.html"
+  }
+}
+
+# Data block is used to get data already defined in resource
+data "aws_iam_policy_document" "cine_react_bucket_policy" {
+statement {
+  actions = ["s3:GetObject"]
+  
+  resources = [
+    aws_s3_bucket.cine_react_s3_bucket.arn,
+    "${aws_s3_bucket.cine_react_s3_bucket.arn}/*"
+  ]
+
+  principals {
+    type = "AWS"
+    identifiers = [aws_cloudfront_origin_access.identity.cine_react_origin_access.iam_arn]
+  }
+}
+  
 }
