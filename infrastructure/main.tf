@@ -13,7 +13,7 @@ terraform {
 }
 
 locals {
-  local_prefix = "${var.prefix}-${terraform.workspace}"
+  prefix = "${var.prefix}-${terraform.workspace}"
   common_tags = {
     Environment = terraform.workspace
     Project     = var.project

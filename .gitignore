@@ -119,7 +119,8 @@ dist
 
 ### Terraform ###
 # Local .terraform directories
-infrastructure/.terraform/*
+infrastructure/.terraform/
+infrastructure/.terraform.lock.hcl
 
 # .tfstate files
 infrastructure/*.tfstate

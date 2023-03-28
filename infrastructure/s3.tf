@@ -1,6 +1,6 @@
 # resource block use to create resource
 resource "aws_s3_bucket" "cine_react_s3_bucket" {
-  bucket        = "${loca.prefix}-app-ulrich"
+  bucket        = "${local.prefix}-app-ulrich"
   force_destroy = true
 
   tags = local.common_tags
@@ -39,20 +39,25 @@ resource "aws_s3_bucket_website_configuration" "cine_react_bucket_website_config
   }
 }
 
+resource "aws_s3_bucket_policy" "cinema_app_bucket_policy" {
+  bucket = aws_s3_bucket.cine_react_s3_bucket.id
+  policy = data.aws_iam_policy_document.cine_react_bucket_policy.json
+}
+
 # Data block is used to get data already defined in resource
 data "aws_iam_policy_document" "cine_react_bucket_policy" {
-statement {
-  actions = ["s3:GetObject"]
-  
-  resources = [
-    aws_s3_bucket.cine_react_s3_bucket.arn,
-    "${aws_s3_bucket.cine_react_s3_bucket.arn}/*"
-  ]
+  statement {
+    actions = ["s3:GetObject"]
 
-  principals {
-    type = "AWS"
-    identifiers = [aws_cloudfront_origin_access.identity.cine_react_origin_access.iam_arn]
+    resources = [
+      aws_s3_bucket.cine_react_s3_bucket.arn,
+      "${aws_s3_bucket.cine_react_s3_bucket.arn}/*"
+    ]
+
+    principals {
+      type        = "AWS"
+      identifiers = [aws_cloudfront_origin_access_identity.cine_react_origin_access.iam_arn]
+    }
   }
-}
-  
+
 }
