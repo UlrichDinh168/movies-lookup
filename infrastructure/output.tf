@@ -1,5 +1,5 @@
-output "cine_react_bucket_name" {
-  value = aws_s3_bucket.cine_react_s3_bucket.id
+output "journey_react_bucket_name" {
+  value = aws_s3_bucket.journey_react_s3_bucket.id
 }
 
 output "cloudfront_distribution_id" {

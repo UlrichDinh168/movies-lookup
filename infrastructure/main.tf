@@ -5,8 +5,8 @@ provider "aws" {
 
 terraform {
   backend "s3" {
-    bucket  = "cine-tf-state"
-    key     = "cine.tfstate"
+    bucket  = "journey-tf-state"
+    key     = "journey.tfstate"
     region  = "eu-north-1"
     encrypt = true
   }

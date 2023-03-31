@@ -112,7 +112,7 @@ jobs:
             cd artifacts/infrastructure/
             terraform workspace select ${CIRCLE_BRANCH}
             terraform apply --auto-approve
-            terraform output cine_react_bucket_name > ../cine_react_bucket_name.txt
+            terraform output journey_react_bucket_name > ../journey_react_bucket_name.txt
             terraform output cloudfront_distribution_id > ../cloudfront_distribution_id.txt
       - persist_to_workspace:
           root: ./
@@ -130,7 +130,7 @@ jobs:
       - run:
           name: Deploy to AWS s3
           command: |
-            AWS_BUCKET_NAME=$(cat artifacts/cine_react_bucket_name.txt | sed 's/\"//g')
+            AWS_BUCKET_NAME=$(cat artifacts/journey_react_bucket_name.txt | sed 's/\"//g')
             echo $AWS_BUCKET_NAME
             if [ "${CIRCLE_BRANCH}" == "master" ]
             then
