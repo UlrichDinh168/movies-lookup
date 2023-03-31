@@ -132,10 +132,10 @@ jobs:
           command: |
             AWS_BUCKET_NAME=$(cat artifacts/cine_react_bucket_name.txt | sed 's/\"//g')
             echo $AWS_BUCKET_NAME
-            if ["${CIRCLE_BRANCH}" == "master"]
+            if [ "${CIRCLE_BRANCH}" == "master" ]
             then
               aws --region ${AWS_REGION} s3 sync ~/repo/dist s3://${AWS_BUCKET_NAME} --delete
-            elif ["${CIRCLE_BRANCH}" == "staging"]
+            elif [ "${CIRCLE_BRANCH}" == "staging" ]
             then  
               aws --region ${AWS_REGION} s3 sync ~/repo/dist s3://${AWS_BUCKET_NAME} --delete
             else
@@ -157,10 +157,10 @@ jobs:
             CLOUDFRONT_DISTRIBUTION_ID=$(cat artifacts/cloudfront_distribution_id.txt | sed 's/\"//g')
             echo $CLOUDFRONT_DISTRIBUTION_ID
             aws configure set preview.cloudfront true
-            if ["${CIRCLE_BRANCH}" == "master"]
+            if [ "${CIRCLE_BRANCH}" == "master" ]
             then
               aws cloudfront create-invalidation --distribution-id ${CLOUDFRONT_DISTRIBUTION_ID} --path /\*
-            elif ["${CIRCLE_BRANCH}" == "staging"]
+            elif [ "${CIRCLE_BRANCH}" == "staging" ]
             then  
               aws cloudfront create-invalidation --distribution-id ${CLOUDFRONT_DISTRIBUTION_ID} --path /\*
             else
