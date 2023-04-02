@@ -1,14 +1,23 @@
-const express = require("express");
-const { apiRoutes } = require("./routes/apiRoutes.js");
-const cors = require("cors");
-// const dotenv = require("dotenv");
-const path = require("path");
-const { fileURLToPath } = require("url");
+import express, { Request, Response, NextFunction } from "express";
+import { apiRoutes } from "./routes/apiRoutes.js";
+import cors from "cors";
+import dotenv from "dotenv";
+import path from "path";
 
-// dotenv.config();
+dotenv.config();
 
-const PORT = process.env.PORT || 8000;
-// const PORT = 8000;
+class APIError extends Error {
+  status: number;
+
+  constructor(message: string, status: number) {
+    super(message);
+    this.status = status;
+  }
+}
+
+
+const PORT: number | string = process.env.PORT || 8000;
+
 const app = express();
 
 app.use(express.json());
@@ -19,25 +28,23 @@ app.use("/api", apiRoutes);
 
 // const __dirname = dirname(fileURLToPath(import.meta.url));
 
-
 const root = path.join(__dirname, "../client", "build");
 app.use(express.static(root));
-app.get("*", (req, res) => {
+app.get("*", (req: Request, res: Response) => {
   res.sendFile("index.html", { root });
 });
 
-
 // Serve static assets in production
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === "production") {
   // Set static folder
-  app.use(express.static('client/build'))
+  app.use(express.static("client/build"));
 
-  app.get("*", (req, res) => {
+  app.get("*", (req: Request, res: Response) => {
     res.sendFile(path.resolve(__dirname, "../client", "build", "index.html"));
   });
 }
 
-app.use((req, res, next) => {
+app.use((req: Request, res: Response, next: NextFunction) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",
@@ -50,13 +57,12 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use((req, res, next) => {
-  const error = new Error("Not found");
-  error.status = 404;
-  next(error);
+app.use((err: APIError, req: Request, res: Response, next: NextFunction) => {
+  err.status = 404;
+  next(err);
 });
 
-app.use((error, req, res, next) => {
+app.use((error: APIError, req: Request, res: Response,) => {
   res.status(error.status || 500);
   res.json({
     error: {
