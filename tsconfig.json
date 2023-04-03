@@ -13,9 +13,9 @@
     "newLine": "lf",
 
     "rootDir": ".",
-    "baseUrl": "./src",
+    // "baseUrl": "./src",
     "sourceMap": true,
-
+    "outDir": "./dist",
     "alwaysStrict": true,
     "strict": true,
     "noImplicitAny": true,
@@ -23,7 +23,9 @@
 
     "removeComments": false,
     "downlevelIteration": true,
-
+    "allowImportingTsExtensions": true,
+    "emitDeclarationOnly": true,
+    "declaration": true,
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "useDefineForClassFields": true,
@@ -33,6 +35,6 @@
     "transpileOnly": true,
     "transpiler": "ts-node/transpilers/swc-experimental"
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "./src/index.d.ts"],
+  "include": ["/**/*.ts", "/**/*.tsx", "main.tsx", "vite-env.d.ts", "App.tsx"],
   "exclude": ["node_modules", "dist"]
 }

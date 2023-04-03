@@ -7,7 +7,7 @@
     "plaintext": "html"
   },
   "editor.fontSize": 12,
-  "window.zoomLevel": 0,
+  "window.zoomLevel": 1,
   "editor.quickSuggestions": {
     "strings": true
   }
