@@ -1,5 +1,5 @@
 {
-  "name": "fullstack-cicd-demo",
+  "name": "journey",
   "private": true,
   "version": "0.0.0",
   "workspaces": [
@@ -9,23 +9,31 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "build:server": "cd ./src/backend && tsc",
     "preview": "vite preview",
     "start": "node ./backend/dist/index.js",
-    "frontend": "cd frontend && yarn run dev",
-    "backend": "cd backend && yarn run start",
-    "prettier:check": "prettier --check 'src/**/*.{js,ts,tsx,json}'",
+    "frontend": "cd ./src/frontend && npm run dev",
+    "backend": "cd ./src/backend && npm run start",
+    "prettier:check": "prettier --check './**/*.{js,ts,tsx,json}'",
     "lint:fix": "eslint ./src --ext .jsx,.js,.ts,.tsx --quiet --fix --ignore-path ./.gitignore",
     "lint:format": "prettier  --loglevel warn --write \"./**/*.{js,jsx,ts,tsx,css,md,json}\" ",
-    "lint": "yarn lint:format && yarn lint:fix"
+    "lint": "npm run lint:format && npm run lint:fix"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.9.3",
+    "@sentry/browser": "^7.46.0",
     "autoprefixer": "^10.4.14",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "axios": "^1.3.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.10.0",
+    "redux-thunk": "^2.4.2"
   },
   "devDependencies": {
-    "@types/react": "^17.0.33",
-    "@types/react-dom": "^17.0.10",
+    "@testing-library/react": "^14.0.0",
+    "@types/react": "^18.0.32",
+    "@types/react-dom": "^18.0.11",
+    "@types/redux-logger": "^3.0.9",
     "@typescript-eslint/eslint-plugin": "^5.54.1",
     "@typescript-eslint/parser": "^5.54.1",
     "@vitejs/plugin-react": "^1.0.7",
@@ -37,8 +45,10 @@
     "eslint-plugin-standard": "^5.0.0",
     "prettier": "^2.5.1",
     "prettier-plugin-tailwindcss": "^0.1.5",
+    "react-redux": "^8.0.5",
+    "redux": "^4.2.1",
+    "tailwindcss": "^3.3.1",
     "ts-node": "^10.9.1",
-    "typescript": "^5.0.3",
     "vitawind": "^2.2.4",
     "vite": "^2.7.2"
   }
