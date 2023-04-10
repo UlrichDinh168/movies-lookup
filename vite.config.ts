@@ -6,5 +6,8 @@ export default defineConfig({
   plugins: [react()],
   optimizeDeps: {
     // include: ['src/frontend',]
+  },
+  define: {
+    'process.env': process.env
   }
 });

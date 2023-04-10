@@ -35,6 +35,6 @@
     "transpileOnly": true,
     "transpiler": "ts-node/transpilers/swc-experimental"
   },
-  "include": ["/**/*.ts", "/**/*.tsx", "main.tsx", "vite-env.d.ts", "App.tsx"],
+  "include": ["/**/*.ts", "/**/*.tsx", "main.tsx", "vite-env.d.ts", "src/App.tsx"],
   "exclude": ["node_modules", "dist"]
 }
