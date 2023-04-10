@@ -1,8 +1,10 @@
 import { combineReducers } from "redux";
-import searchResultSlice from "./itineraries";
+import movieReducer from "./movieSlice";
+import routeReducer from "./routesSlice";
 
 export const rootReducer = combineReducers({
-  itinerary: searchResultSlice,
+  movie: movieReducer,
+  route: routeReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>
