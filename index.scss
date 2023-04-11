@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url(./src/styles/Crew.scss);
+@import url(./src/styles/Details.scss);
+@import url(./src/styles/ErrorPage.scss);
+@import url(./src/styles/Grid.scss);
+@import url(./src/styles/Header.scss);
+@import url(./src/styles/Main.scss);
+@import url(./src/styles/MainContent.scss);
+@import url(./src/styles/Media.scss);
+@import url(./src/styles/Overview.scss);
+@import url(./src/styles/Paginate.scss);
+@import url(./src/styles/Rating.scss);
+@import url(./src/styles/Review.scss);
+@import url(./src/styles/SearchResult.scss);
+@import url(./src/styles/Slideshow.scss);
+@import url(./src/styles/Spinner.scss);
+@import url(./src/styles/Tabs.scss);
+
+body {
+  margin: 0;
+  font-family: 'Roboto Mono', sans-serif;
+  background-color: #020e18;
+}
