@@ -1,7 +1,6 @@
 # Fullstack CI/CD demo
 
 - **template of:** vite + react + typescript
-- **tailwindcss:** v3.x
 
 ## Started
 
