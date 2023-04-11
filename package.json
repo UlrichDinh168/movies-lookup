@@ -1,10 +1,23 @@
 {
-  "name": "template-vite-react-ts-tailwind-v3",
+  "name": "journey",
+  "private": true,
   "version": "0.0.0",
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "build:server": "cd ./src/backend && tsc",
+    "preview": "vite preview",
+    "start": "node ./backend/dist/index.js",
+    "frontend": "cd ./src/frontend && npm run dev",
+    "backend": "cd ./src/backend && npm run start",
+    "prettier:check": "prettier --check './**/*.{js,ts,tsx,json}'",
+    "lint:fix": "eslint ./src --ext .jsx,.js,.ts,.tsx --quiet --fix --ignore-path ./.gitignore",
+    "lint:format": "prettier  --loglevel warn --write \"./**/*.{js,jsx,ts,tsx,css,md,json}\" ",
+    "lint": "npm run lint:format && npm run lint:fix"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.3",
@@ -27,10 +40,19 @@
     "@typescript-eslint/eslint-plugin": "^5.54.1",
     "@typescript-eslint/parser": "^5.54.1",
     "@vitejs/plugin-react": "^1.0.7",
-    "vitawind": "^2.2.4",
+    "eslint": "^8.36.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-standard": "^5.0.0",
+    "node-sass": "^8.0.0",
     "prettier": "^2.5.1",
-    "prettier-plugin-tailwindcss": "^0.1.5",
-    "typescript": "^4.4.4",
+    "react-redux": "^8.0.5",
+    "redux": "^4.2.1",
+    "sass": "^1.61.0",
+    "sass-loader": "^13.2.2",
+    "ts-node": "^10.9.1",
     "vite": "^2.7.2"
   }
 }
