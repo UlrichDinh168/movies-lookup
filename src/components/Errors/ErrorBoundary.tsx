@@ -2,11 +2,6 @@ import React, { Component } from 'react';
 import * as Sentry from '@sentry/browser';
 
 import ErrorPage from './ErrorPage';
-type ErrorBoundaryState = {
-  error: Error | null;
-  errorInfo: any;
-  eventId: string | null;
-}
 
 class ErrorBoundary extends Component<any, any> {
   constructor(props: any) {
