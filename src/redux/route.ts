@@ -1,6 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { store } from '../store';
 
-const initialState = {
+export type RoutesType = {
+  routesArray: string[],
+  path: string,
+  url: string
+}
+
+const initialState: RoutesType = {
   routesArray: [],
   path: '',
   url: ''
@@ -16,7 +23,7 @@ export const RoutesSlice = createSlice({
         routesArray: action.payload
       }
     },
-    pathUrl: (state, action) => {
+    pathURL: (state, action) => {
       return {
         ...state,
         path: action.payload.path,
@@ -25,5 +32,13 @@ export const RoutesSlice = createSlice({
     },
   }
 });
+export const _pathURL = (path: string, url: string) => {
+  store.dispatch(pathURL({ path, url }));
+};
 
+export const _appRoutes = (routes: any) => {
+  store.dispatch(appRoutes({ routes }));
+};
+
+export const { appRoutes, pathURL } = RoutesSlice.actions
 export default RoutesSlice.reducer

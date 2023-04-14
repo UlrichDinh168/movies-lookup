@@ -8,10 +8,12 @@ import {
   setResponsePageNumber,
   searchQuery,
   searchResult,
-  clearMovieDetails
-} from '../redux/movieSlice';
-import { pathURL } from '../redux/routesSlice';
+  clearMovieDetails,
+} from '../redux/movie';
+import { _pathURL } from '../redux/route';
 import { setError } from '../redux/error';
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux';
 
 const HEADER_LIST = [
   {
@@ -40,20 +42,12 @@ const HEADER_LIST = [
   }
 ];
 
-const Header = (props: any) => {
-  const {
-    // getMovies,
-    page,
-    totalPages,
-    path,
-    url,
-    pathURL,
-    _setError,
-    errors
-  } = props;
+const Header = () => {
 
-  let [navClass, setNavClass] = useState(false);
-  let [menuClass, setMenuClass] = useState(false);
+  const { url, routesArray, path } = useSelector((state: RootState) => state.route)
+  const { page, totalPages } = useSelector((state: RootState) => state.movie)
+  const { message, statusCode } = useSelector((state: RootState) => state.error)
+
   const [type, setType] = useState('now_playing');
   const [search, setSearch] = useState('');
   const [disableSearch, setDisableSearch] = useState(false);
@@ -61,54 +55,54 @@ const Header = (props: any) => {
 
   const [isToggle, setIsToggle] = useState(false)
 
-
   const navigate = useNavigate();
   const location = useLocation();
   const detailsRoute = useMatch('/:id/:name/details');
 
-  // useEffect(() => {
-  //   if (routesArray.length) {
-  //     if (!path && !url) {
-  //       pathURL('/', '/');
-  //       const error = new Error(`Page with pathname ${location.pathname} not found with status code 404.`);
-  //       setError({ message: `Page with pathname ${location.pathname} not found.`, statusCode: 404 });
-  //       throw error;
-  //     }
-  //   }
-  //   // eslint-disable-next-line
-  // }, [path, url, routesArray, pathURL]);
-
   useEffect(() => {
-    getMovies(type, page);
-    setResponsePageNumber(page, totalPages);
-    if (detailsRoute || location.pathname === '/') {
-      setHideHeader(true);
-    }
+    if (location.pathname && !message && !statusCode) {
+      getMovies(type, page);
+      setResponsePageNumber(page, totalPages);
+      if (detailsRoute || location.pathname === '/') {
+        setHideHeader(true);
+      }
 
-    if (location.pathname !== '/' && location.key) {
-      setDisableSearch(true);
+      if (location.pathname !== '/' && location.key) {
+        setDisableSearch(true);
+      }
     }
-
     // eslint-disable-next-line
   }, [type, disableSearch, location]);
 
-  // useEffect(() => {
-  //   if (location.pathname && !errors.message && !errors.statusCode) {
-  //     getMovies(type, page);
-  //     setResponsePageNumber(page, totalPages);
-  //     if (detailsRoute || location.pathname === '/') {
-  //       setHideHeader(true);
-  //     }
 
-  //     if (location.pathname !== '/' && location.key) {
-  //       setDisableSearch(true);
-  //     }
-  //   }
+  useEffect(() => {
 
-  //   // eslint-disable-next-line
-  // }, [type, disableSearch, location]);
+    if (routesArray.length === 0) {
+      if (!path && !url) {
+        _pathURL('/', '/');
+        // const error = new Error(`Page with pathname ${location.pathname} not found with status code 404.`);
+        setError({ message: `Page with pathname ${location.pathname} not found.`, statusCode: 404 });
+        // throw error;
+      }
+    }
+    // eslint-disable-next-line
+  }, [path, url, routesArray,]);
 
-  const setMovieTypeUrl = (type) => {
+
+  useEffect(() => {
+    if (message || statusCode) {
+      _pathURL('/', '/');
+      const error = new Error(`${message} With status code ${statusCode} `);
+      setError({ message: `Page with pathname ${location.pathname} not found.`, statusCode: 404 });
+      throw error;
+    }
+    // eslint-disable-next-line
+  }, [message, statusCode]);
+
+
+
+
+  const setMovieTypeUrl = (type: any) => {
     setDisableSearch(false);
     if (location.pathname !== '/') {
       clearMovieDetails();
@@ -121,7 +115,7 @@ const Header = (props: any) => {
     }
   };
 
-  const onSearchChange = (e) => {
+  const onSearchChange = (e: any) => {
     setSearch(e.target.value);
     searchQuery(e.target.value);
     searchResult(e.target.value);
@@ -134,15 +128,7 @@ const Header = (props: any) => {
   };
 
   const toggleMenu = () => {
-    // menuClass = !menuClass;
-    // navClass = !navClass;
     setIsToggle(!isToggle);
-    // setMenuClass(menuClass);
-    // if (isToggle) {
-    //   document.body.classList.add('header-nav-open');
-    // } else {
-    //   document.body.classList.remove('header-nav-open');
-    // }
   };
 
   return (

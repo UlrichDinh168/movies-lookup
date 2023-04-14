@@ -1,15 +1,16 @@
-import { createSlice } from '@reduxjs/toolkit'
-import { AppThunk, AppDispatch, useAppDispatch } from "../store.js";
+import { createSlice, } from '@reduxjs/toolkit'
 import { MOVIE_API_URL, SEARCH_API_URL, MOVIE_DETAILS_URL, MOVIE_CREDITS_URL, MOVIE_IMAGES_URL, MOVIE_VIDEOS_URL, MOVIE_REVIEWS_URL } from '../services/movies.service.js';
+import { setError } from './error.js';
+import { store } from '../store.js'
 
 export type MoviesType = {
-  list: string[],
+  list: any,
   page: number,
   totalPages: number,
   movieType: string,
   searchQuery: string,
   searchResult: string[],
-  movie: string[]
+  movie: any
 };
 
 const initialState = {
@@ -88,70 +89,63 @@ export const { _movieList, _responsePage, _loadMoreResults, _movieType, _movieDe
 //   dispatch({ type, payload });
 // };
 
-const getMoviesRequest = async (type: string, pageNumber: number) => {
+export const getMoviesRequest = async (type: string, pageNumber: number) => {
   const movies = await MOVIE_API_URL(type, pageNumber);
   const { results, page, total_pages } = movies.data;
   const payload = {
     page,
     totalPages: total_pages
   };
-  return { results, payload };
-};
+  return { results, payload }
+}
 
-export const getMovies = (type: string, pageNumber: number) => async (dispatch: AppDispatch): Promise<void> => {
-  try {
-    const response = await getMoviesRequest(type, pageNumber);
-    // const { results, payload } = response;
-    dispatch(_movieList);
-    // dispatch(RESPONSE_PAGE, payload);
-  } catch (error) {
-    if (error.response) {
-      const payload = {
-        message: error.response.data.message || error.response.data.status_message,
-        statusCode: error.response.status
-      };
-      // dispatchMethod(SET_ERROR, payload, dispatch);
-    }
+const normalizeError = (error: any) => {
+  if (error.response) {
+    const payload = {
+      message: error.response.data.message || error.response.data.status_message,
+      statusCode: error.response.status
+    };
+    store.dispatch(setError(payload));
   }
-};
-
-export const loadMoreMovies = (type: string, pageNumber) => async (dispatch: AppDispatch) => {
+}
+export const getMovies = async (type: string, pageNumber: number): Promise<void> => {
   try {
     const response = await getMoviesRequest(type, pageNumber);
     const { results, payload } = response;
-    dispatchMethod(LOAD_MORE_RESULTS, { list: results, page: payload.page, totalPages: payload.totalPages }, dispatch);
-  } catch (error) {
+    store.dispatch(_movieList(results));
+    store.dispatch(_responsePage(payload));
+  } catch (error: any) {
+    normalizeError(error)
+  }
+};
+
+export const loadMoreMovies = async (type: string, pageNumber: number): Promise<void> => {
+  try {
+    const response = await getMoviesRequest(type, pageNumber);
+    const { results, payload } = response;
+    store.dispatch(_loadMoreResults({ list: results, page: payload.page, totalPages: payload.totalPages }))
+  } catch (error: any) {
     if (error.response) {
-      const payload = {
-        message: error.response.data.message || error.response.data.status_message,
-        statusCode: error.response.status
-      };
-      dispatchMethod(SET_ERROR, payload, dispatch);
+      normalizeError(error);
     }
   }
 };
 
-export const searchResult = (query) => async (dispatch: AppDispatch) => {
+export const searchResult = async (query: any) => {
   try {
     if (query) {
       const movies = await SEARCH_API_URL(query);
       const { results } = movies.data;
-      dispatchMethod(SEARCH_RESULT, results, dispatch);
+      store.dispatch(_searchResult(results));
     } else {
-      dispatchMethod(SEARCH_RESULT, [], dispatch);
+      store.dispatch(_searchResult([]));
     }
   } catch (error) {
-    if (error.response) {
-      const payload = {
-        message: error.response.data.message || error.response.data.status_message,
-        statusCode: error.response.status
-      };
-      dispatchMethod(SET_ERROR, payload, dispatch);
-    }
+    normalizeError(error)
   }
 };
 
-export const movieDetails = (id) => async (dispatch: AppDispatch) => {
+export const movieDetails = async (id: any) => {
   try {
     const details = await MOVIE_DETAILS_URL(id);
     const credits = await MOVIE_CREDITS_URL(id);
@@ -162,29 +156,28 @@ export const movieDetails = (id) => async (dispatch: AppDispatch) => {
     const resp = await Promise.all([details, credits, images, videos, reviews])
       .then((values) => Promise.all(values.map((value) => value.data)))
       .then((response) => response);
-    dispatchMethod(MOVIE_DETAILS, resp, dispatch);
+
+    store.dispatch(_movieDetails(resp))
   } catch (error) {
-    if (error.response) {
-      dispatchMethod(SET_ERROR, error.response.data.message, dispatch);
-    }
+    normalizeError(error)
   }
 };
 
-export const clearMovieDetails = () => async (dispatch: AppDispatch) => {
-  dispatchMethod(CLEAR_MOVIE_DETAILS, [], dispatch);
+export const clearMovieDetails = async () => {
+  store.dispatch(_clearMovieDetails())
 };
 
-export const setResponsePageNumber = (page, totalPages) => async (dispatch) => {
+export const setResponsePageNumber = async (page: number, totalPages: number) => {
   const payload = { page, totalPages };
-  dispatchMethod(RESPONSE_PAGE, payload, dispatch);
+  store.dispatch(_responsePage(payload))
 };
 
-export const setMovieType = (type) => async (dispatch) => {
-  dispatchMethod(MOVIE_TYPE, type, dispatch);
+export const setMovieType = async (type: string) => {
+  store.dispatch(_movieType(type))
 };
 
-export const searchQuery = (query) => async (dispatch) => {
-  dispatchMethod(SEARCH_QUERY, query, dispatch);
+export const searchQuery = async (query: string) => {
+  store.dispatch(_searchQuery(query))
 };
 
 

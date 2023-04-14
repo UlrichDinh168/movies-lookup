@@ -1,7 +1,8 @@
-import { configureStore, Action } from '@reduxjs/toolkit'
+import { configureStore, Action, } from '@reduxjs/toolkit'
 import { rootReducer, RootState } from "./redux/index.js";
 import thunk from "redux-thunk"
 import { useDispatch } from 'react-redux'
+import logger from 'redux-logger'
 
 import { ThunkAction, } from 'redux-thunk'
 
@@ -15,13 +16,15 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   null,
   Action<string>
 >;
+
 export const useAppDispatch = () => useDispatch<AppDispatch>()
 
 // Create redux store
 export const store = configureStore({
   reducer: rootReducer,
-  middleware: [thunk],
-  devTools: process.env.NODE_ENV !== 'production',
+  middleware: [thunk, logger],
+  devTools: true,
 })
 
 
+// import.meta.env.NODE_ENV !== 'production'
