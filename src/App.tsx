@@ -8,12 +8,9 @@ import Main from './components/Main.js';
 import Details from './components/Details.js';
 import AppRoutes from './routes';
 import { _appRoutes } from './redux/route.js'
-import { useSelector } from 'react-redux';
-import { RootState } from './redux';
 
 
 const App = () => {
-  const state = useSelector((state: RootState) => state)
 
   const routesArray = [
     {
@@ -29,7 +26,7 @@ const App = () => {
   ];
   useEffect(() => {
     (_appRoutes(routesArray));
-  }, [routesArray,]);
+  }, [routesArray, _appRoutes]);
 
   return (
     <BrowserRouter>

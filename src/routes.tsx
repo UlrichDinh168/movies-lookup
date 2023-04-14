@@ -3,7 +3,7 @@ import { useRoutes } from 'react-router-dom';
 import Details from './components/Details.tsx';
 import Main from './components/Main.tsx';
 
-const AppRoutes = (props: any) => {
+const AppRoutes = () => {
 
   const elements = useRoutes([
     {
