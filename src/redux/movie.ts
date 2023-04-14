@@ -10,7 +10,7 @@ export type MoviesType = {
   movieType: string,
   searchQuery: string,
   searchResult: string[],
-  movie: (string | number)[]
+  movie: any
 };
 
 const initialState = {
@@ -145,9 +145,8 @@ export const searchResult = async (query: any) => {
   }
 };
 
-export const movieDetails = async (id: number | string) => {
+export const movieDetails = async (id: any) => {
   try {
-
     const details = await MOVIE_DETAILS_URL(id);
     const credits = await MOVIE_CREDITS_URL(id);
     const images = await MOVIE_IMAGES_URL(id);
@@ -157,6 +156,7 @@ export const movieDetails = async (id: number | string) => {
     const resp = await Promise.all([details, credits, images, videos, reviews])
       .then((values) => Promise.all(values.map((value) => value.data)))
       .then((response) => response);
+
     store.dispatch(_movieDetails(resp))
   } catch (error) {
     normalizeError(error)

@@ -10,10 +10,11 @@ type ItemDetail = {
 
 }
 const Overview = ({ movie }: any) => {
-  const [items, setItems] = useState([]);
+  console.log(movie, 'movie');
+
+  const [items, setItems] = useState<any>([]);
   const [details] = useState(movie[0]);
   const [credits] = useState(movie[1]);
-  console.log(movie, 'movie');
 
   useEffect(() => {
     const detailItems: ItemDetail[] = [
@@ -96,7 +97,7 @@ const Overview = ({ movie }: any) => {
       <div className="overview-column-2">
         <div className="overview-detail">
           <h6>Production Companies</h6>
-          {details.production_companies.map((prod) => (
+          {details.production_companies.map((prod: any) => (
             <div className="product-company" key={uuidv4()}>
               <img src={prod.logo_path ? `${IMAGE_URL}${prod.logo_path}` : 'http://placehold.it/30x30'} alt="" />
               <span>{prod.name}</span>

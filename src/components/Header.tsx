@@ -47,7 +47,6 @@ const Header = () => {
   const { url, routesArray, path } = useSelector((state: RootState) => state.route)
   const { page, totalPages } = useSelector((state: RootState) => state.movie)
   const { message, statusCode } = useSelector((state: RootState) => state.error)
-  console.log(path, url, routesArray, 'sss');
 
   const [type, setType] = useState('now_playing');
   const [search, setSearch] = useState('');
@@ -61,33 +60,6 @@ const Header = () => {
   const detailsRoute = useMatch('/:id/:name/details');
 
   useEffect(() => {
-    if (routesArray.length) {
-      if (!path && !url) {
-        _pathURL('/', '/');
-        const error = new Error(`Page with pathname ${location.pathname} not found with status code 404.`);
-        setError({ message: `Page with pathname ${location.pathname} not found.`, statusCode: 404 });
-        throw error;
-      }
-    }
-    // eslint-disable-next-line
-  }, [path, url, routesArray, _pathURL]);
-
-  useEffect(() => {
-    getMovies(type, page)
-    setResponsePageNumber(page, totalPages);
-    if (detailsRoute || location.pathname === '/') {
-      setHideHeader(true);
-    }
-
-    if (location.pathname !== '/' && location.key) {
-      setDisableSearch(true);
-    }
-
-    // eslint-disable-next-line
-  }, [type, disableSearch, location]);
-  // }, []);
-
-  useEffect(() => {
     if (location.pathname && !message && !statusCode) {
       getMovies(type, page);
       setResponsePageNumber(page, totalPages);
@@ -99,9 +71,36 @@ const Header = () => {
         setDisableSearch(true);
       }
     }
-
     // eslint-disable-next-line
   }, [type, disableSearch, location]);
+
+
+  useEffect(() => {
+
+    if (routesArray.length === 0) {
+      if (!path && !url) {
+        _pathURL('/', '/');
+        // const error = new Error(`Page with pathname ${location.pathname} not found with status code 404.`);
+        setError({ message: `Page with pathname ${location.pathname} not found.`, statusCode: 404 });
+        // throw error;
+      }
+    }
+    // eslint-disable-next-line
+  }, [path, url, routesArray,]);
+
+
+  useEffect(() => {
+    if (message || statusCode) {
+      _pathURL('/', '/');
+      const error = new Error(`${message} With status code ${statusCode} `);
+      setError({ message: `Page with pathname ${location.pathname} not found.`, statusCode: 404 });
+      throw error;
+    }
+    // eslint-disable-next-line
+  }, [message, statusCode]);
+
+
+
 
   const setMovieTypeUrl = (type: any) => {
     setDisableSearch(false);
@@ -116,7 +115,7 @@ const Header = () => {
     }
   };
 
-  const onSearchChange = (e) => {
+  const onSearchChange = (e: any) => {
     setSearch(e.target.value);
     searchQuery(e.target.value);
     searchResult(e.target.value);

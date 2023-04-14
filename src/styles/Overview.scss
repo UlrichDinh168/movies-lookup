@@ -22,20 +22,20 @@
       padding-bottom: 30px;
     }
 
-    table {
+    & table {
       background-color: inherit !important;
       border-collapse: collapse;
       width: 100%;
       font-size: 14px;
     }
 
-    td,
+    & td,
     th {
       text-align: left;
       padding: 8px;
     }
 
-    td:first-child {
+    & td:first-child {
       width: 70px;
       img {
         border-radius: 5px;
@@ -43,7 +43,7 @@
       }
     }
 
-    td:nth-child(2) {
+    & td:nth-child(2) {
       font-size: 16px;
       color: #4280bf;
     }
@@ -63,14 +63,14 @@
       background-position: center;
       background-repeat: no-repeat;
 
-      img {
+      & img {
         width: 30px;
         height: 30px;
         line-height: 30px;
         margin-right: 6px;
       }
 
-      span {
+      & span {
         line-height: 25px;
         font-weight: 300;
         width: auto;
@@ -85,18 +85,18 @@
       margin-bottom: 10px;
     }
 
-    p {
+    & p {
       font-weight: 300;
       text-transform: none;
       line-height: 24px;
 
-      a {
+      & a {
         color: #4280bf;
         text-decoration: none;
         padding-right: 5px;
       }
 
-      a:not(:last-child):after {
+      & a:not(:last-child):after {
         content: ',';
       }
     }

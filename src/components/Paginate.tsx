@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 const Paginate = (props: any) => {
   const { currentPage, totalPages, paginate } = props;
-  const [page, setPage] = useState<number>();
+  const [page, setPage] = useState<any>();
   const [totalPageNumber, setTotalPageNumber] = useState();
 
   useEffect(() => {

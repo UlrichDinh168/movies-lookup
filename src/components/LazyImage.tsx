@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import placeHolder from '/assets/lazy_loader.gif';
 
 const LazyImage = (props: any) => {
-  const { src, alt, children, className } = props;
+  const { src, children, className } = props;
   const [imageSrc, setImageSrc] = useState(placeHolder);
-  const [imageRef, setImageRef] = useState();
+  const [imageRef, setImageRef] = useState<any>();
 
   useEffect(() => {
     let observer: any;
@@ -44,7 +44,7 @@ const LazyImage = (props: any) => {
 
   return (
     <>
-      <div className={className} ref={setImageRef} style={{ backgroundImage: `url(${imageSrc})` }} alt={alt}>
+      <div className={className} ref={setImageRef} style={{ backgroundImage: `url(${imageSrc})` }} >
         {children}
       </div>
     </>

@@ -20,7 +20,7 @@ const Crew = ({ movie }: any) => {
               <th className="head">Job</th>
             </tr>
           </thead>
-          {credits?.crew.map((data) => (
+          {credits?.crew.map((data: any) => (
             <tbody key={uuidv4()}>
               <tr>
                 <td>

@@ -33,11 +33,11 @@ export const RoutesSlice = createSlice({
   }
 });
 export const _pathURL = (path: string, url: string) => {
-  store.dispatch(pathURL({ payload: { path, url } }));
+  store.dispatch(pathURL({ path, url }));
 };
 
 export const _appRoutes = (routes: any) => {
-  store.dispatch(appRoutes({ payload: routes }));
+  store.dispatch(appRoutes({ routes }));
 };
 
 export const { appRoutes, pathURL } = RoutesSlice.actions

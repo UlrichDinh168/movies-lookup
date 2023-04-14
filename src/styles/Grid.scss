@@ -43,14 +43,14 @@
     background-color: #dd003f;
     padding: 8px 15px;
     text-transform: uppercase;
-    color: #ffffff;
+    color: #ffffff !important;
     border: none;
     border-radius: 30px;
     font-weight: bold;
     outline: none;
 
-    a {
-      color: #ffffff;
+    & a {
+      color: white !important;
       text-decoration: none;
     }
   }

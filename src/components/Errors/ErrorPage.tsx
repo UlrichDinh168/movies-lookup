@@ -3,8 +3,9 @@ import { useNavigate } from 'react-router-dom';
 
 import { setError } from '../../redux/error';
 
-const ErrorPage = ({ clearState, setError }) => {
+const ErrorPage = ({ clearState }: any) => {
   const navigate = useNavigate();
+  // const { message,statusCode } = useSelector((state: RootState) => state.error)
 
   const navigateToHomePage = () => {
     setError({ message: '', statusCode: null });

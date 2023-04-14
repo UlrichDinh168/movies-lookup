@@ -15,36 +15,43 @@ import { movieDetails } from '../redux/movie';
 import { _pathURL } from '../redux/route';
 import { IMAGE_URL } from '../services/movies.service';
 
-const Details = (props: any) => {
-
-  // const { movie } = props.state.movie
+const Details = () => {
 
   const { movie } = useSelector((state: RootState) => state.movie)
-  const [details, setDetails] = useState([]);
+  const [details, setDetails] = useState<any>([]);
   const [loading, setLoading] = useState(false);
   const { id } = useParams();
   const location = useLocation();
 
-  if (movie.length !== 0) setDetails(movie[0]);
+  // useEffect(() => {
+  //   setLoading(true);
+  //   setTimeout(() => {
+  //     setLoading(false);
+  //   }, 2000);
+  // }, []);
 
-  console.log(details, 'details');
-  console.log(movie, 'movie');
-  console.log(location, 'location');
 
   const name = async () => {
-    setLoading(true);
-    _pathURL(location.pathname, location.pathname);
-    if (movie.length === 0 && id === undefined) {
-      await movieDetails(id);
+    try {
+      await setLoading(true);
+
+      await _pathURL(location.pathname, location.pathname);
+      if (movie.length === 0 && id !== undefined) {
+        await movieDetails(id);
+      }
+      setDetails(movie[0]);
+    } catch (error) {
+      console.log(error);
+
+    } finally {
+      setLoading(false);
     }
-    if (movie.length !== 0) setDetails(movie[0]);
-    setLoading(false);
+
   }
 
   useEffect(() => {
-    console.log('uong');
-    // name()
-
+    name()
+    // eslint-disable-next-line
   }, [id, movie]);
 
   return (
@@ -52,7 +59,7 @@ const Details = (props: any) => {
       {loading ? (
         <Spinner />
       ) : (
-        details ? (
+        details?.length !== 0 ? (
           <div className="movie-container">
             <div className="movie-bg" style={{ backgroundImage: `url(${IMAGE_URL}${details?.backdrop_path})` }}></div>
             <div className="movie-overlay"></div>
@@ -63,19 +70,19 @@ const Details = (props: any) => {
               <div className="movie-body">
                 <div className="movie-overview">
                   <div className="title">
-                    {details.title} <span>{details.release_date}</span>
+                    {details?.title} <span>{details?.release_date}</span>
                   </div>
                   <div className="movie-genres">
                     <ul className="genres">
-                      {details?.genres?.map((genre) => (
+                      {details?.genres?.map((genre: any) => (
                         <li key={genre.id}>{genre.name}</li>
                       ))}
                     </ul>
                   </div>
                   <div className="rating">
-                    <Rating className="rating-stars" rating={details.vote_average} totalStars={10} />
+                    <Rating className="rating-stars" rating={details?.vote_average} totalStars={10} />
                     &nbsp;
-                    <span>{details.vote_average}</span> <p>({details.vote_count}) reviews</p>
+                    <span>{details?.vote_average}</span> <p>({details?.vote_count}) reviews</p>
                   </div>
                   <Tabs>
                     <div>

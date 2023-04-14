@@ -45,7 +45,7 @@
   width: 330px;
   height: 550px;
 
-  img {
+  & img {
     display: inline-block;
     max-height: 100%;
     max-width: 100%;
@@ -70,7 +70,7 @@
       text-transform: uppercase;
       margin-bottom: 25px;
 
-      span {
+      & span {
         font-size: 24px;
         font-weight: 300;
         color: #4f5b68;
@@ -84,7 +84,7 @@
         display: flex;
         margin-bottom: 25px;
 
-        li {
+        & li {
           list-style: none;
           font-size: 14px;
           font-weight: 700;
@@ -103,17 +103,17 @@
       font-size: 25px;
       margin-bottom: 90px;
 
-      .fas {
+      & .fas {
         color: #f5b50a;
         padding-left: 4px;
       }
 
-      span {
+      & span {
         color: #9aa9bb;
         margin-top: -10px;
       }
 
-      p {
+      & p {
         color: #dd003f;
         margin-left: 10px;
         font-size: 18px;
@@ -145,7 +145,7 @@
         overflow-wrap: break-word;
         word-wrap: break-word;
         hyphens: auto;
-        span {
+        & span {
           display: flex !important;
         }
       }
@@ -157,7 +157,7 @@
         .genres {
           display: inline-block;
 
-          li {
+          & li {
             list-style: none;
             font-size: 14px;
             font-weight: 700;
@@ -171,7 +171,7 @@
     .rating {
       display: block !important;
 
-      span {
+      & span {
         color: #9aa9bb;
         padding-top: 10px;
         float: left !important;
@@ -198,7 +198,7 @@
       .title {
         font-size: 16px;
         width: auto;
-        span {
+        & span {
           display: flex;
           font-size: 18px;
         }
@@ -217,7 +217,7 @@
       .title {
         font-size: 14px;
         width: 90%;
-        span {
+        & span {
           display: flex;
           font-size: 18px;
         }
@@ -230,7 +230,7 @@
         font-size: 18px !important;
       }
 
-      span {
+      & span {
         font-size: 80%;
       }
     }
