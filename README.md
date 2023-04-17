@@ -1,6 +1,6 @@
-# Fullstack CI/CD demo
+# Movies finder 
 
-- **template of:** vite + react + typescript
+# Live demo: https://movies-lookup.netlify.app/
 
 ## Started
 
@@ -26,9 +26,3 @@ yarn dev
 yarn build
 # or `npm run build`
 ```
-
----
-
-<p align="center">
-<img src="./powered-by-vitawind-bright.png">
-</p>
