@@ -39,7 +39,7 @@ bower_components
 build/Release
 
 # Dependency directories
-node_modules/
+node_modules
 jspm_packages/
 
 # Snowpack dependency directory (https://snowpack.dev/)
@@ -116,4 +116,40 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
-yarn.lock
+
+### Terraform ###
+# Local .terraform directories
+infrastructure/.terraform/
+infrastructure/.terraform.lock.hcl
+
+# .tfstate files
+infrastructure/*.tfstate
+infrastructure/*.tfstate.*
+
+# Crash log files
+crash.log
+crash.*.log
+
+# Exclude all .tfvars files, which are likely to contain sensitive data, such as
+# password, private keys, and other secrets. These should not be part of version
+# control as they are data points which are potentially sensitive and subject
+# to change depending on the environment.
+*.tfvars
+*.tfvars.json
+
+# Ignore override files as they are usually used to override resources locally and so
+# are not checked in
+infrastructure/override.tf
+infrastructure/override.tf.json
+infrastructure/*_override.tf
+infrastructure/*_override.tf.json
+
+# Include override files you do wish to add to version control using negated pattern
+# !example_override.tf
+
+# Include tfplan files to ignore the plan output of command: terraform plan -out=tfplan
+# example: *tfplan*
+
+# Ignore CLI configuration files
+.terraformrc
+terraform.rc
