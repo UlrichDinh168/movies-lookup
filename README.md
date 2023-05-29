@@ -1,29 +1,28 @@
-# template-vite-react-ts-tailwind-v3
+# Movies finder 
 
-- **template of:** vite + react + typescript
-- **tailwindcss:** v3.x
+# Live demo: https://movies-lookup.netlify.app/
 
 ## Started
+
 ```bash
 yarn
 # or `npm install`
 ```
 
 ---
+
 ## Develop
+
 ```bash
 yarn dev
 # or `npm run dev`
 ```
 
 ---
+
 ## Build
+
 ```bash
 yarn build
 # or `npm run build`
 ```
-
----
-<p align="center">
-<img src="./powered-by-vitawind-bright.png">
-</p>
