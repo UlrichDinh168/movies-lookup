@@ -51,11 +51,11 @@ const LazyImage = (props: any) => {
   );
 };
 
-LazyImage.propTypes = {
-  src: PropTypes.string,
-  alt: PropTypes.string,
-  children: PropTypes.any,
-  className: PropTypes.any
-};
+// LazyImage.propTypes = {
+//   src: PropTypes.string,
+//   alt: PropTypes.string,
+//   children: PropTypes.any,
+//   className: PropTypes.any
+// };
 
 export default LazyImage;

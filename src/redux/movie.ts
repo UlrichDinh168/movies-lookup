@@ -111,6 +111,8 @@ const normalizeError = (error: any) => {
 export const getMovies = async (type: string, pageNumber: number): Promise<void> => {
   try {
     const response = await getMoviesRequest(type, pageNumber);
+    console.log(response, 'response');
+
     const { results, payload } = response;
     store.dispatch(_movieList(results));
     store.dispatch(_responsePage(payload));

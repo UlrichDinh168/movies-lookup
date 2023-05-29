@@ -32,6 +32,7 @@ export const RoutesSlice = createSlice({
     },
   }
 });
+
 export const _pathURL = (path: string, url: string) => {
   store.dispatch(pathURL({ path, url }));
 };

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useEffect, useRef } from 'react';
+// import PropTypes from 'prop-types';
 import { useNavigate, useLocation, useMatch } from 'react-router-dom';
 import logo from '/assets/cinema-logo.svg';
 import {
@@ -59,17 +59,30 @@ const Header = () => {
   const location = useLocation();
   const detailsRoute = useMatch('/:id/:name/details');
 
-  useEffect(() => {
-    if (location.pathname && !message && !statusCode) {
-      getMovies(type, page);
-      setResponsePageNumber(page, totalPages);
-      if (detailsRoute || location.pathname === '/') {
-        setHideHeader(true);
-      }
+  const effectRan = useRef(false)
 
-      if (location.pathname !== '/' && location.key) {
-        setDisableSearch(true);
+  useEffect(() => {
+
+    if (effectRan.current === false) {
+      console.log('Head1');
+
+      if (effectRan.current === false) {
+
+        if (location.pathname && !message && !statusCode) {
+          getMovies(type, page);
+          setResponsePageNumber(page, totalPages);
+          if (detailsRoute || location.pathname === '/') {
+            setHideHeader(true);
+          }
+
+          if (location.pathname !== '/' && location.key) {
+            setDisableSearch(true);
+          }
+        }
       }
+    }
+    return () => {
+      effectRan.current = true
     }
     // eslint-disable-next-line
   }, [type, disableSearch, location]);
@@ -77,29 +90,41 @@ const Header = () => {
 
   useEffect(() => {
 
-    if (routesArray.length === 0) {
-      if (!path && !url) {
-        _pathURL('/', '/');
-        // const error = new Error(`Page with pathname ${location.pathname} not found with status code 404.`);
-        setError({ message: `Page with pathname ${location.pathname} not found.`, statusCode: 404 });
-        // throw error;
+    if (effectRan.current === false) {
+      console.log('Head2');
+      if (routesArray.length === 0) {
+        if (!path && !url) {
+          _pathURL('/', '/');
+
+          // const error = new Error(`Page with pathname ${location.pathname} not found with status code 404.`);
+          setError({ message: `Page with pathname ${location.pathname} not found.`, statusCode: 404 });
+        }
       }
+    }
+    return () => {
+      effectRan.current = true
     }
     // eslint-disable-next-line
   }, [path, url, routesArray,]);
 
 
   useEffect(() => {
-    if (message || statusCode) {
-      _pathURL('/', '/');
-      const error = new Error(`${message} With status code ${statusCode} `);
-      setError({ message: `Page with pathname ${location.pathname} not found.`, statusCode: 404 });
-      throw error;
+    if (effectRan.current === false) {
+      console.log('Head3');
+
+      if (message || statusCode) {
+        _pathURL('/', '/');
+        const error = new Error(`${message} With status code ${statusCode} `);
+        setError({ message: `Page with pathname ${location.pathname} not found.`, statusCode: 404 });
+        throw error;
+      }
+    }
+
+    return () => {
+      effectRan.current = true
     }
     // eslint-disable-next-line
   }, [message, statusCode]);
-
-
 
 
   const setMovieTypeUrl = (type: any) => {
@@ -178,22 +203,22 @@ const Header = () => {
   );
 };
 
-Header.propTypes = {
-  getMovies: PropTypes.func,
-  setMovieType: PropTypes.func,
-  searchQuery: PropTypes.func,
-  searchResult: PropTypes.func,
-  clearMovieDetails: PropTypes.func,
-  setResponsePageNumber: PropTypes.func,
-  page: PropTypes.number,
-  totalPages: PropTypes.number,
-  path: PropTypes.string,
-  url: PropTypes.string,
-  routesArray: PropTypes.array,
-  pathURL: PropTypes.func,
-  setError: PropTypes.func,
-  errors: PropTypes.object
-};
+// Header.propTypes = {
+//   getMovies: PropTypes.func,
+//   setMovieType: PropTypes.func,
+//   searchQuery: PropTypes.func,
+//   searchResult: PropTypes.func,
+//   clearMovieDetails: PropTypes.func,
+//   setResponsePageNumber: PropTypes.func,
+//   page: PropTypes.number,
+//   totalPages: PropTypes.number,
+//   path: PropTypes.string,
+//   url: PropTypes.string,
+//   routesArray: PropTypes.array,
+//   pathURL: PropTypes.func,
+//   setError: PropTypes.func,
+//   errors: PropTypes.object
+// };
 
 
 export default Header;

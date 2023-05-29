@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { store } from "./store.js";
 import { Provider, } from "react-redux";
 import { BrowserRouter } from 'react-router-dom';
@@ -11,6 +11,7 @@ import { _appRoutes } from './redux/route.js'
 
 
 const App = () => {
+  const effectRan = useRef(false)
 
   const routesArray = [
     {
@@ -24,15 +25,21 @@ const App = () => {
       component: Details
     }
   ];
+
   useEffect(() => {
-    (_appRoutes(routesArray));
+    if (effectRan.current === false) {
+      (_appRoutes(routesArray));
+    }
+    return () => {
+      effectRan.current = true
+    }
   }, [routesArray, _appRoutes]);
 
   return (
     <BrowserRouter>
-      <ErrorBoundary>
-        <Header />
-      </ErrorBoundary>
+      {/* <ErrorBoundary> */}
+      <Header />
+      {/* </ErrorBoundary> */}
       <Provider store={store}>
         <AppRoutes />
       </Provider>

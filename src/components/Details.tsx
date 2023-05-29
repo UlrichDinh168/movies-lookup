@@ -23,14 +23,6 @@ const Details = () => {
   const { id } = useParams();
   const location = useLocation();
 
-  // useEffect(() => {
-  //   setLoading(true);
-  //   setTimeout(() => {
-  //     setLoading(false);
-  //   }, 2000);
-  // }, []);
-
-
   const name = async () => {
     try {
       await setLoading(true);

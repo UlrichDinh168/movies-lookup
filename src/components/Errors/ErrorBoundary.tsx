@@ -23,6 +23,7 @@ class ErrorBoundary extends Component<any, any> {
     }
   }
 
+  // reset state property to take user back to Home page
   clearState() {
     this.setState({ error: null, errorInfo: null, eventId: null });
   }

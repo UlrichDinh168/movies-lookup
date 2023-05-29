@@ -6,7 +6,7 @@ import { RootState } from '../redux';
 import MainContent from './MainContent';
 import Spinner from './Spinner';
 import { loadMoreMovies, setResponsePageNumber } from '../redux/movie';
-import { _pathURL, } from '../redux/route';
+import { _pathURL } from '../redux/route';
 import SearchResult from './SearchResult';
 
 const Main = () => {
@@ -27,9 +27,19 @@ const Main = () => {
     }, 3000);
   }, []);
 
+  const useEffectRan = useRef(false)
   useEffect(() => {
-    _pathURL(location.pathname, location.pathname);
-    setResponsePageNumber(currentPage, totalPages);
+
+    if (useEffectRan.current === false) {
+
+      _pathURL(location.pathname, location.pathname);
+
+      setResponsePageNumber(currentPage, totalPages);
+    }
+
+    return () => {
+      useEffectRan.current = true
+    }
   }, [currentPage, totalPages]);
 
   const fetchData = () => {
