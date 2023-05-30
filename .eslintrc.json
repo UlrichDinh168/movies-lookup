@@ -30,14 +30,19 @@
     "no-return-assign": 0,
     "@typescript-eslint/no-unused-vars": "error",
     // to enforce using type for object type definitions, can be type or interface
-    "@typescript-eslint/consistent-type-definitions": ["error", "type"],
+    "@typescript-eslint/consistent-type-definitions": [
+      "error",
+      "type"
+    ],
 
     // suppress errors for missing 'import React' in files
     "react/react-in-jsx-scope": "off",
     // allow jsx syntax in js files (for next.js project)
     "react/jsx-filename-extension": [
       1,
-      { "extensions": [".js", ".jsx", ".tsx", ".ts"] }
+      {
+        "extensions": [".js", ".jsx", ".tsx", ".ts"]
+      }
     ] //should add ".ts" if typescript project
   }
 }

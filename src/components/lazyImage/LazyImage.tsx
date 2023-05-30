@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import placeHolder from '../../../public/assets/cinema-logo.svg';
+import placeHolder from '/assets/lazy_loader.gif';
 
 const LazyImage = (props: any) => {
   const { src, children, className } = props;
@@ -49,7 +49,9 @@ const LazyImage = (props: any) => {
       <div
         className={className}
         ref={setImageRef}
-        style={{ backgroundImage: `url(${imageSrc})` }}
+        style={{
+          backgroundImage: `url(${imageSrc})`
+        }}
       >
         {children}
       </div>

@@ -6,7 +6,11 @@ import ErrorPage from './ErrorPage';
 class ErrorBoundary extends Component<any, any> {
   constructor(props: any) {
     super(props);
-    this.state = { error: null, errorInfo: null, eventId: null };
+    this.state = {
+      error: null,
+      errorInfo: null,
+      eventId: null
+    };
     this.clearState = this.clearState.bind(this);
   }
 
@@ -25,7 +29,11 @@ class ErrorBoundary extends Component<any, any> {
 
   // reset state property to take user back to Home page
   clearState() {
-    this.setState({ error: null, errorInfo: null, eventId: null });
+    this.setState({
+      error: null,
+      errorInfo: null,
+      eventId: null
+    });
   }
 
   render() {

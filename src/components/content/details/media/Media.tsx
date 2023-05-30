@@ -8,7 +8,13 @@ import {
   MediaType
 } from '../../../../redux/types';
 
-const Media = ({ media, videos }: { media: MediaType; videos: VideoType }) => {
+const Media = ({
+  media,
+  videos
+}: {
+  media: MediaType;
+  videos: VideoType;
+}) => {
   return (
     <>
       <div className="media">
@@ -31,7 +37,9 @@ const Media = ({ media, videos }: { media: MediaType; videos: VideoType }) => {
           </div>
         </div>
         <div>
-          <div className="media-title">Photos ({media.posters.length})</div>
+          <div className="media-title">
+            Photos ({media.posters.length})
+          </div>
           <div className="media-images">
             {media.posters.map((data: PosterItemType, i: number) => (
               <div

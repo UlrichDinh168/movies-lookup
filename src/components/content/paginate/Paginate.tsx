@@ -22,7 +22,9 @@ const Paginate = (props: PaginateType) => {
         {page} - {totalPageNumber}
       </span>
       <button
-        className={page > 1 ? 'paginate-button' : 'paginate-button disable'}
+        className={
+          page > 1 ? 'paginate-button' : 'paginate-button disable'
+        }
         onClick={() => paginate('prev')}
       >
         Prev

@@ -38,8 +38,9 @@ const Overview = ({
     for (let i = 0; i < symbolArray.length; i++) {
       if (number >= symbolArray[i].value) {
         result =
-          (number / symbolArray[i].value).toFixed(digits).replace(regex, '$1') +
-          symbolArray[i].symbol;
+          (number / symbolArray[i].value)
+            .toFixed(digits)
+            .replace(regex, '$1') + symbolArray[i].symbol;
       }
     }
     return result;
@@ -118,28 +119,32 @@ const Overview = ({
       <div className="overview-column-2">
         <div className="overview-detail">
           <h6>Production Companies</h6>
-          {details.production_companies.map((prod: ProductionCompany) => (
-            <div className="product-company" key={uuidv4()}>
-              <img
-                src={
-                  prod.logo_path
-                    ? `${IMAGE_URL}${prod.logo_path}`
-                    : 'http://placehold.it/30x30'
-                }
-                alt=""
-              />
-              <span>{prod.name}</span>
-            </div>
-          ))}
+          {details.production_companies.map(
+            (prod: ProductionCompany) => (
+              <div className="product-company" key={uuidv4()}>
+                <img
+                  src={
+                    prod.logo_path
+                      ? `${IMAGE_URL}${prod.logo_path}`
+                      : 'http://placehold.it/30x30'
+                  }
+                  alt=""
+                />
+                <span>{prod.name}</span>
+              </div>
+            )
+          )}
         </div>
         <div className="overview-detail">
           <h6>Language(s)</h6>
           <p>
-            {details.spoken_languages.map((language: SpokenLanguage) => (
-              <a href="!#" key={language.name}>
-                {language.name}
-              </a>
-            ))}
+            {details.spoken_languages.map(
+              (language: SpokenLanguage) => (
+                <a href="!#" key={language.name}>
+                  {language.name}
+                </a>
+              )
+            )}
           </p>
         </div>
         {items.map((data: ItemDetail) => (

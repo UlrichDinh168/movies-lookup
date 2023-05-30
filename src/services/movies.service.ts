@@ -21,7 +21,9 @@ export const SEARCH_API_URL = async (query: string) => {
 };
 
 export const MOVIE_DETAILS_URL = async (id: number) => {
-  const response = await axios.get(`${REQUEST_URL}/movie/${id}${API_KEY_URL}`);
+  const response = await axios.get(
+    `${REQUEST_URL}/movie/${id}${API_KEY_URL}`
+  );
   return response;
 };
 

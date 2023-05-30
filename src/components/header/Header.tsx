@@ -1,4 +1,9 @@
-import React, { useState, useEffect, useRef, ChangeEvent } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  ChangeEvent
+} from 'react';
 // import PropTypes from 'prop-types';
 import { useNavigate, useLocation, useMatch } from 'react-router-dom';
 import logo from '/assets/cinema-logo.svg';
@@ -46,7 +51,9 @@ const Header = () => {
   const { url, routesArray, path } = useSelector(
     (state: RootState) => state.route
   );
-  const { page, totalPages } = useSelector((state: RootState) => state.movie);
+  const { page, totalPages } = useSelector(
+    (state: RootState) => state.movie
+  );
   const { message, statusCode } = useSelector(
     (state: RootState) => state.error
   );
@@ -108,7 +115,9 @@ const Header = () => {
     if (effectRan.current === false) {
       if (message || statusCode) {
         _pathURL('/', '/');
-        const error = new Error(`${message} With status code ${statusCode} `);
+        const error = new Error(
+          `${message} With status code ${statusCode} `
+        );
         setError({
           message: `Page with pathname ${location.pathname} not found.`,
           statusCode: 404
@@ -158,7 +167,10 @@ const Header = () => {
         <div className="header-nav-wrapper">
           <div className="header-bar"></div>
           <div className="header-navbar">
-            <div className="header-image" onClick={() => navigateToMainPage()}>
+            <div
+              className="header-image"
+              onClick={() => navigateToMainPage()}
+            >
               <img src={logo} alt="" />
             </div>
             <div
@@ -176,7 +188,9 @@ const Header = () => {
             </div>
             <ul
               className={`${
-                isToggle ? 'header-nav header-mobile-nav' : 'header-nav'
+                isToggle
+                  ? 'header-nav header-mobile-nav'
+                  : 'header-nav'
               }`}
             >
               {HEADER_LIST.map((data) => (
@@ -193,11 +207,15 @@ const Header = () => {
                     <i className={data.iconClass}></i>
                   </span>
                   &nbsp;
-                  <span className="header-list-name">{data.name}</span>
+                  <span className="header-list-name">
+                    {data.name}
+                  </span>
                 </li>
               ))}
               <input
-                className={`search-input ${disableSearch ? 'disabled' : ''}`}
+                className={`search-input ${
+                  disableSearch ? 'disabled' : ''
+                }`}
                 type="text"
                 placeholder="Search for a movie"
                 value={search}

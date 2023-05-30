@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { ImageObjType } from '../../Types';
+
+export type ImageObjType = {
+  id: number;
+  url: string;
+};
 
 type SlideShow = {
   images: ImageObjType[];
@@ -21,11 +25,12 @@ const Slideshow = (props: SlideShow) => {
     slideIndex: 0
   });
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [sliderInterval, setSliderInterval] = useState<NodeJS.Timeout | number>(
-    0
-  );
+  const [sliderInterval, setSliderInterval] = useState<
+    NodeJS.Timeout | number
+  >(0);
 
   const { slideShow, slideIndex } = state;
+
   let currentSlideIndex = 0;
 
   useEffect(() => {
@@ -117,7 +122,9 @@ const Slideshow = (props: SlideShow) => {
           {images && images.length && slideShow && (
             <div
               className="slider-image"
-              style={{ backgroundImage: `url(${slideShow.url})` }}
+              style={{
+                backgroundImage: `url(${slideShow.url})`
+              }}
             ></div>
           )}
         </div>

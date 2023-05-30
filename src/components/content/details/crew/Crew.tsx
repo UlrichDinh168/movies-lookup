@@ -2,7 +2,10 @@ import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import { IMAGE_URL } from '../../../../services/movies.service';
-import { CrewItemType, secondaryDetailsType } from '../../../../redux/types';
+import {
+  CrewItemType,
+  secondaryDetailsType
+} from '../../../../redux/types';
 
 const Crew = ({ crew }: { crew: secondaryDetailsType }) => {
   return (

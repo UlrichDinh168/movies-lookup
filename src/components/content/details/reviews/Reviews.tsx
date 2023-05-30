@@ -1,6 +1,9 @@
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { ReviewItemType, ReviewResult } from '../../../../redux/types';
+import {
+  ReviewItemType,
+  ReviewResult
+} from '../../../../redux/types';
 
 type ReviewType = {
   reviews: ReviewItemType;
@@ -11,7 +14,8 @@ const Reviews = ({ reviews }: ReviewType) => {
     <>
       <div className="movie-reviews">
         <div className="div-title">
-          Reviews {reviews.results.length > 0 ? reviews.results.length : ''}
+          Reviews{' '}
+          {reviews.results.length > 0 ? reviews.results.length : ''}
         </div>
         {reviews.results.length ? (
           reviews.results.map((data: ReviewResult) => (

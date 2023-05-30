@@ -21,7 +21,9 @@ import {
 } from '../../../redux/types/MovieType';
 
 const Details = () => {
-  const { movie, loading } = useSelector((state: RootState) => state.movie);
+  const { movie, loading } = useSelector(
+    (state: RootState) => state.movie
+  );
 
   const movieDetails = movie[0] as primaryDetailsType;
 
@@ -51,7 +53,10 @@ const Details = () => {
 
           <div className="movie-details">
             <div className="movie-image">
-              <img src={`${IMAGE_URL}${movieDetails.poster_path}`} alt="" />
+              <img
+                src={`${IMAGE_URL}${movieDetails.poster_path}`}
+                alt=""
+              />
             </div>
 
             <div className="movie-body">
@@ -91,7 +96,10 @@ const Details = () => {
                     <Crew crew={secondaryDetails} />
                   </div>
                   <div>
-                    <Media media={imageDetails} videos={videoDetails} />
+                    <Media
+                      media={imageDetails}
+                      videos={videoDetails}
+                    />
                   </div>
                   <div>
                     <Reviews reviews={reviewDetails} />

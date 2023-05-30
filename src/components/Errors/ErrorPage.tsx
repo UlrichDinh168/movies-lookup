@@ -21,7 +21,10 @@ const ErrorPage: React.FC<ErrorPageProps> = ({ clearState }) => {
     <div className="error-page">
       <h1 className="error-header">Oops!</h1>
       <p className="error-msg">Something went wrong.</p>
-      <div className="error-link" onClick={() => navigateToHomePage()}>
+      <div
+        className="error-link"
+        onClick={() => navigateToHomePage()}
+      >
         <i className="icon-home"></i> Go back to home page.
       </div>
     </div>

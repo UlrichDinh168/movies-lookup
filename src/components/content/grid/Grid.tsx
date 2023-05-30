@@ -50,18 +50,27 @@ const Grid = () => {
               <div className="grid-read-more">
                 <button
                   className="grid-cell-button"
-                  onClick={() => fetchMovieDetail(data.id, data.title)}
+                  onClick={() =>
+                    fetchMovieDetail(data.id, data.title)
+                  }
                 >
                   {/* <Link to={`/${data.id}/${formatMovieTitle(data.title)}/details`}>Read More</Link> */}
                   Read more
                 </button>
               </div>
               <div className="grid-detail">
-                <span className="grid-detail-title">{data.title}</span>
+                <span className="grid-detail-title">
+                  {data.title}
+                </span>
                 <div className="grid-detail-rating">
-                  <Rating rating={data.vote_average} totalStars={10} />
+                  <Rating
+                    rating={data.vote_average}
+                    totalStars={10}
+                  />
                   &nbsp;&nbsp;
-                  <div className="grid-vote-average">{data.vote_average}</div>
+                  <div className="grid-vote-average">
+                    {data.vote_average}
+                  </div>
                 </div>
               </div>
             </LazyImage>

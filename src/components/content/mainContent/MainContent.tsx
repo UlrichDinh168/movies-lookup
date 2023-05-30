@@ -6,8 +6,15 @@ import Slideshow from '../slideShow/SlideShow';
 import Paginate from '../paginate/Paginate';
 import Grid from '../grid/Grid';
 import { IMAGE_URL } from '../../../services/movies.service';
-import { getMovies, setResponsePageNumber } from '../../../redux/movie';
-import { ImageObjType } from '../../Types';
+import {
+  getMovies,
+  setResponsePageNumber
+} from '../../../redux/movie';
+
+export type ImageObjType = {
+  id: number;
+  url: string;
+};
 
 const MainContent = () => {
   const { page, totalPages, list, movieType } = useSelector(

@@ -5,14 +5,16 @@ import { RootState } from '../../redux';
 
 import MainContent from '../content/mainContent/MainContent';
 import Spinner from '../spinner/Spinner';
-import { loadMoreMovies, setResponsePageNumber } from '../../redux/movie';
+import {
+  loadMoreMovies,
+  setResponsePageNumber
+} from '../../redux/movie';
 import { _pathURL } from '../../redux/route';
 import SearchResult from '../content/searchResult/SearchResult';
 
 const Main = () => {
-  const { page, totalPages, searchResult, movieType, loading } = useSelector(
-    (state: RootState) => state.movie
-  );
+  const { page, totalPages, searchResult, movieType, loading } =
+    useSelector((state: RootState) => state.movie);
   const { message, statusCode } = useSelector(
     (state: RootState) => state.error
   );
@@ -21,8 +23,8 @@ const Main = () => {
   const mainRef = useRef<HTMLDivElement | null>(null);
   const bottomLineRef = useRef<HTMLDivElement | null>(null);
   const location = useLocation();
-
   const useEffectRan = useRef(false);
+
   useEffect(() => {
     if (useEffectRan.current === false) {
       _pathURL(location.pathname, location.pathname);
@@ -45,7 +47,8 @@ const Main = () => {
   };
 
   const handleScroll = () => {
-    const containerHeight = mainRef.current?.getBoundingClientRect().height;
+    const containerHeight =
+      mainRef.current?.getBoundingClientRect().height;
     const _bottomLineRef = bottomLineRef.current;
 
     if (
@@ -53,7 +56,8 @@ const Main = () => {
       _bottomLineRef !== undefined &&
       _bottomLineRef !== null
     ) {
-      const { top: bottomLineTop } = _bottomLineRef.getBoundingClientRect();
+      const { top: bottomLineTop } =
+        _bottomLineRef.getBoundingClientRect();
       bottomLineTop <= containerHeight && fetchData();
     }
   };
@@ -66,7 +70,11 @@ const Main = () => {
             <Spinner />
           ) : (
             <>
-              {searchResult?.length === 0 ? <MainContent /> : <SearchResult />}
+              {searchResult?.length === 0 ? (
+                <MainContent />
+              ) : (
+                <SearchResult />
+              )}
             </>
           )}
           <div ref={bottomLineRef}></div>

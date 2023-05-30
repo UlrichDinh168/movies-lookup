@@ -262,7 +262,10 @@ export const {
 //   dispatch({ type, payload });
 // };
 
-export const getMoviesRequest = async (type: string, pageNumber: number) => {
+export const getMoviesRequest = async (
+  type: string,
+  pageNumber: number
+) => {
   const movies = await MOVIE_API_URL(type, pageNumber);
   const { results, page, total_pages } = movies.data;
   const payload = {
@@ -275,7 +278,8 @@ export const getMoviesRequest = async (type: string, pageNumber: number) => {
 const normalizeError = (error: any) => {
   const payload = {
     message:
-      error.response.data.message || error.response.data.status_message,
+      error.response.data.message ||
+      error.response.data.status_message,
     statusCode: error.response.status
   };
   store.dispatch(setError(payload));
@@ -286,6 +290,8 @@ export const getMovies = async (
   pageNumber: number
 ): Promise<void> => {
   try {
+    setLoading(true);
+
     const response = await getMoviesRequest(type, pageNumber);
 
     const { results, payload } = response;
@@ -293,6 +299,8 @@ export const getMovies = async (
     store.dispatch(_responsePage(payload));
   } catch (error: unknown) {
     normalizeError(error);
+  } finally {
+    setLoading(false);
   }
 };
 
@@ -339,8 +347,16 @@ export const movieDetails = async (id: number) => {
     const videos = await MOVIE_VIDEOS_URL(id);
     const reviews = await MOVIE_REVIEWS_URL(id);
 
-    const resp = await Promise.all([details, credits, images, videos, reviews])
-      .then((values) => Promise.all(values.map((value) => value.data)))
+    const resp = await Promise.all([
+      details,
+      credits,
+      images,
+      videos,
+      reviews
+    ])
+      .then((values) =>
+        Promise.all(values.map((value) => value.data))
+      )
       .then((response) => response);
 
     store.dispatch(_movieDetails(resp));
