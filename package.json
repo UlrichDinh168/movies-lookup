@@ -9,11 +9,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "build:server": "cd ./src/backend && tsc",
     "preview": "vite preview",
     "start": "node ./backend/dist/index.js",
-    "frontend": "cd ./src/frontend && npm run dev",
-    "backend": "cd ./src/backend && npm run start",
     "prettier:check": "prettier --check './**/*.{js,ts,tsx,json}'",
     "lint:fix": "eslint ./src --ext .jsx,.js,.ts,.tsx --quiet --fix --ignore-path ./.gitignore",
     "lint:format": "prettier  --loglevel warn --write \"./**/*.{js,jsx,ts,tsx,css,md,json}\" ",

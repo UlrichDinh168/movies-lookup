@@ -10,7 +10,9 @@ import { getMovies, setResponsePageNumber } from '../../../redux/movie';
 import { ImageObjType } from '../../Types';
 
 const MainContent = () => {
-  const { page, totalPages, list, movieType } = useSelector((state: RootState) => state.movie);
+  const { page, totalPages, list, movieType } = useSelector(
+    (state: RootState) => state.movie
+  );
 
   const [currentPage, setCurrentPage] = useState(page);
   const [images, setImages] = useState<ImageObjType[]>([]);
@@ -76,7 +78,11 @@ const MainContent = () => {
       <div className="grid-movie-title">
         <div className="movieType">{HEADER_TYPE[movieType]}</div>
         <div className="paginate">
-          <Paginate currentPage={currentPage} totalPages={totalPages} paginate={paginate} />
+          <Paginate
+            currentPage={currentPage}
+            totalPages={totalPages}
+            paginate={paginate}
+          />
         </div>
       </div>
       <Grid />

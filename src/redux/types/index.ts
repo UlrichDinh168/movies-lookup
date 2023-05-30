@@ -1,4 +1,31 @@
 import { MovieList } from './MovieListType';
-import { Movie, CrewItemType, PosterItemType, LogoItemType, BackdropItemType, CastItemType, VideoItemType, ReviewItemType } from './MovieType';
+import {
+  primaryDetailsType,
+  CrewItemType,
+  ReviewItemType,
+  PosterItemType,
+  LogoItemType,
+  BackdropItemType,
+  CastItemType,
+  VideoItemType,
+  ReviewResult,
+  VideoType,
+  MediaType,
+  secondaryDetailsType
+} from './MovieType';
 
-export { MovieList, Movie, CrewItemType, CastItemType, PosterItemType, VideoItemType, ReviewItemType, LogoItemType, BackdropItemType };
+export {
+  MovieList,
+  primaryDetailsType,
+  CrewItemType,
+  ReviewResult,
+  CastItemType,
+  PosterItemType,
+  VideoItemType,
+  ReviewItemType,
+  LogoItemType,
+  BackdropItemType,
+  VideoType,
+  MediaType,
+  secondaryDetailsType
+};

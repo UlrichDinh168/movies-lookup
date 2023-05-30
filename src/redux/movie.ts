@@ -10,135 +10,144 @@ import {
 } from '../services/movies.service.js';
 import { setError } from './error.js';
 import { store } from '../store.js';
-import { MovieList, Movie, CastItemType, CrewItemType, PosterItemType, VideoItemType, ReviewItemType, LogoItemType, BackdropItemType } from './types';
+import {
+  MovieList,
+  primaryDetailsType,
+  CastItemType,
+  secondaryDetailsType,
+  ReviewItemType,
+  LogoItemType,
+  MediaType,
+  VideoType
+} from './types';
 
-export type MovieData = {
-  adult: boolean;
-  backdrop_path: string;
-  belongs_to_collection: null | {
-    id: number;
-    name: string;
-    poster_path: string;
-    backdrop_path: string;
-  };
-  budget: number;
-  genres: {
-    id: number;
-    name: string;
-  }[];
-  homepage: string;
-  id: number;
-  imdb_id: string;
-  original_language: string;
-  original_title: string;
-  overview: string;
-  popularity: number;
-  poster_path: string;
-  production_companies: {
-    id: number;
-    logo_path: string | null;
-    name: string;
-    origin_country: string;
-  }[];
-  production_countries: {
-    iso_3166_1: string;
-    name: string;
-  }[];
-  release_date: string;
-  revenue: number;
-  runtime: number;
-  spoken_languages: {
-    english_name: string;
-    iso_639_1: string;
-    name: string;
-  }[];
-  status: string;
-  tagline: string;
-  title: string;
-  video: boolean;
-  vote_average: number;
-  vote_count: number;
-  cast: {
-    adult: boolean;
-    gender: number;
-    id: number;
-    known_for_department: string;
-    name: string;
-    original_name: string;
-    popularity: number;
-    profile_path: string | null;
-    cast_id: number;
-    character: string;
-    credit_id: string;
-    order: number;
-  }[];
-  crew: {
-    adult: boolean;
-    gender: number;
-    id: number;
-    known_for_department: string;
-    name: string;
-    original_name: string;
-    popularity: number;
-    profile_path: string | null;
-    credit_id: string;
-    department: string;
-    job: string;
-  }[];
-  backdrops: {
-    aspect_ratio: number;
-    height: number;
-    iso_639_1: string;
-    file_path: string;
-    vote_average: number;
-    vote_count: number;
-    width: number;
-  }[];
-  logos: {
-    aspect_ratio: number;
-    height: number;
-    iso_639_1: string;
-    file_path: string;
-    vote_average: number;
-    vote_count: number;
-    width: number;
-  }[];
-  posters: {
-    aspect_ratio: number;
-    height: number;
-    iso_639_1: string;
-    file_path: string;
-    vote_average: number;
-    vote_count: number;
-    width: number;
-  }[];
-  results: {
-    iso_639_1: string;
-    iso_3166_1: string;
-    name: string;
-    key: string;
-    site: string;
-    size: number;
-    type: string;
-    official: boolean;
-    published_at: string;
-    id: string;
-  }[];
-  page: number;
-  total_pages: number;
-  total_results: number;
-  author: string;
-  author_details: {
-    name: string;
-    username: string;
-    avatar_path: string | null;
-    rating: number | null;
-  };
-  content: string;
-  created_at: string;
-  updated_at: string;
-  url: string;
-}
+// export type MovieData = {
+//   adult: boolean;
+//   backdrop_path: string;
+//   belongs_to_collection: null | {
+//     id: number;
+//     name: string;
+//     poster_path: string;
+//     backdrop_path: string;
+//   };
+//   budget: number;
+//   genres: {
+//     id: number;
+//     name: string;
+//   }[];
+//   homepage: string;
+//   id: number;
+//   imdb_id: string;
+//   original_language: string;
+//   original_title: string;
+//   overview: string;
+//   popularity: number;
+//   poster_path: string;
+//   production_companies: {
+//     id: number;
+//     logo_path: string | null;
+//     name: string;
+//     origin_country: string;
+//   }[];
+//   production_countries: {
+//     iso_3166_1: string;
+//     name: string;
+//   }[];
+//   release_date: string;
+//   revenue: number;
+//   runtime: number;
+//   spoken_languages: {
+//     english_name: string;
+//     iso_639_1: string;
+//     name: string;
+//   }[];
+//   status: string;
+//   tagline: string;
+//   title: string;
+//   video: boolean;
+//   vote_average: number;
+//   vote_count: number;
+//   cast: {
+//     adult: boolean;
+//     gender: number;
+//     id: number;
+//     known_for_department: string;
+//     name: string;
+//     original_name: string;
+//     popularity: number;
+//     profile_path: string | null;
+//     cast_id: number;
+//     character: string;
+//     credit_id: string;
+//     order: number;
+//   }[];
+//   crew: {
+//     adult: boolean;
+//     gender: number;
+//     id: number;
+//     known_for_department: string;
+//     name: string;
+//     original_name: string;
+//     popularity: number;
+//     profile_path: string | null;
+//     credit_id: string;
+//     department: string;
+//     job: string;
+//   }[];
+//   backdrops: {
+//     aspect_ratio: number;
+//     height: number;
+//     iso_639_1: string;
+//     file_path: string;
+//     vote_average: number;
+//     vote_count: number;
+//     width: number;
+//   }[];
+//   logos: {
+//     aspect_ratio: number;
+//     height: number;
+//     iso_639_1: string;
+//     file_path: string;
+//     vote_average: number;
+//     vote_count: number;
+//     width: number;
+//   }[];
+//   posters: {
+//     aspect_ratio: number;
+//     height: number;
+//     iso_639_1: string;
+//     file_path: string;
+//     vote_average: number;
+//     vote_count: number;
+//     width: number;
+//   }[];
+//   results: {
+//     iso_639_1: string;
+//     iso_3166_1: string;
+//     name: string;
+//     key: string;
+//     site: string;
+//     size: number;
+//     type: string;
+//     official: boolean;
+//     published_at: string;
+//     id: string;
+//   }[];
+//   page: number;
+//   total_pages: number;
+//   total_results: number;
+//   author: string;
+//   author_details: {
+//     name: string;
+//     username: string;
+//     avatar_path: string | null;
+//     rating: number | null;
+//   };
+//   content: string;
+//   created_at: string;
+//   updated_at: string;
+//   url: string;
+// }
 
 export type MoviesType = {
   list: MovieList[];
@@ -147,21 +156,18 @@ export type MoviesType = {
   movieType: string;
   searchQuery: string;
   searchResult: string[];
-  movie: MovieData[];
+  movie: MovieArray[];
   loading: boolean;
 };
 
-type MovieArray = Array<
-  Movie |
-  CastItemType |
-  CrewItemType |
-  VideoItemType |
-  ReviewItemType |
-  LogoItemType |
-  PosterItemType |
-  BackdropItemType
->;
-
+type MovieArray =
+  | primaryDetailsType
+  | CastItemType
+  | VideoType
+  | ReviewItemType
+  | LogoItemType
+  | MediaType
+  | secondaryDetailsType;
 
 const initialState = {
   list: [],
@@ -266,21 +272,21 @@ export const getMoviesRequest = async (type: string, pageNumber: number) => {
   return { results, payload };
 };
 
-const normalizeError = (error: unknown) => {
-  if (error.response) {
-    const payload = {
-      message: error.response.data.message || error.response.data.status_message,
-      statusCode: error.response.status
-    };
-    store.dispatch(setError(payload));
-  }
+const normalizeError = (error: any) => {
+  const payload = {
+    message:
+      error.response.data.message || error.response.data.status_message,
+    statusCode: error.response.status
+  };
+  store.dispatch(setError(payload));
 };
 
-
-export const getMovies = async (type: string, pageNumber: number): Promise<void> => {
+export const getMovies = async (
+  type: string,
+  pageNumber: number
+): Promise<void> => {
   try {
     const response = await getMoviesRequest(type, pageNumber);
-    console.log(response, 'response');
 
     const { results, payload } = response;
     store.dispatch(_movieList(results));
@@ -290,19 +296,23 @@ export const getMovies = async (type: string, pageNumber: number): Promise<void>
   }
 };
 
-
-export const loadMoreMovies = async (type: string, pageNumber: number): Promise<void> => {
+export const loadMoreMovies = async (
+  type: string,
+  pageNumber: number
+): Promise<void> => {
   try {
     const response = await getMoviesRequest(type, pageNumber);
     const { results, payload } = response;
-    store.dispatch(_loadMoreResults({ list: results, page: payload.page, totalPages: payload.totalPages }));
+    store.dispatch(
+      _loadMoreResults({
+        list: results,
+        page: payload.page,
+        totalPages: payload.totalPages
+      })
+    );
   } catch (error: unknown) {
-    // if (error.response) {
-    //   normalizeError(error);
-    // }
     if ((error as { response: unknown }).response) {
       normalizeError(error as { response: unknown });
-      // Handle the error
     }
   }
 };
@@ -343,7 +353,10 @@ export const clearMovieDetails = async () => {
   store.dispatch(_clearMovieDetails());
 };
 
-export const setResponsePageNumber = async (page: number, totalPages: number) => {
+export const setResponsePageNumber = async (
+  page: number,
+  totalPages: number
+) => {
   const payload = { page, totalPages };
   store.dispatch(_responsePage(payload));
 };

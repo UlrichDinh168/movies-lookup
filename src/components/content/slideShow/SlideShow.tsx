@@ -21,7 +21,9 @@ const Slideshow = (props: SlideShow) => {
     slideIndex: 0
   });
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [sliderInterval, setSliderInterval] = useState<NodeJS.Timeout | number>(0);
+  const [sliderInterval, setSliderInterval] = useState<NodeJS.Timeout | number>(
+    0
+  );
 
   const { slideShow, slideIndex } = state;
   let currentSlideIndex = 0;
@@ -85,15 +87,24 @@ const Slideshow = (props: SlideShow) => {
   const RenderArrows = () => {
     return (
       <div className="slider-arrows">
-        <div className="slider-arrow slider-arrow--left" onClick={() => moveSlideWithArrows('prev')} />
-        <div className="slider-arrow slider-arrow--right" onClick={() => moveSlideWithArrows('next')} />
+        <div
+          className="slider-arrow slider-arrow--left"
+          onClick={() => moveSlideWithArrows('prev')}
+        />
+        <div
+          className="slider-arrow slider-arrow--right"
+          onClick={() => moveSlideWithArrows('next')}
+        />
       </div>
     );
   };
 
   const Indicators = ({ currentSlide }: IndicatorProps) => {
     const listIndicators = images.map((slide, i) => {
-      const btnClasses = i === currentSlide ? 'slider-navButton slider-navButton--active' : 'slider-navButton';
+      const btnClasses =
+        i === currentSlide
+          ? 'slider-navButton slider-navButton--active'
+          : 'slider-navButton';
       return <button className={btnClasses} key={i} />;
     });
     return <div className="slider-nav">{listIndicators}</div>;
@@ -104,7 +115,10 @@ const Slideshow = (props: SlideShow) => {
       <div className="slider">
         <div className="slider-slides">
           {images && images.length && slideShow && (
-            <div className="slider-image" style={{ backgroundImage: `url(${slideShow.url})` }}></div>
+            <div
+              className="slider-image"
+              style={{ backgroundImage: `url(${slideShow.url})` }}
+            ></div>
           )}
         </div>
         <Indicators currentSlide={slideIndex} />

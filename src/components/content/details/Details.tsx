@@ -11,45 +11,59 @@ import Reviews from './reviews/Reviews';
 import Spinner from '../../spinner/Spinner';
 
 import { IMAGE_URL } from '../../../services/movies.service';
-import { BackdropItemType, CastItemType, CrewItemType, Genre, LogoItemType, Movie, PosterItemType, ReviewItemType, VideoItemType, } from '../../../redux/types/MovieType';
+import {
+  Genre,
+  MediaType,
+  ReviewItemType,
+  VideoType,
+  primaryDetailsType,
+  secondaryDetailsType
+} from '../../../redux/types/MovieType';
 
-import { MovieData } from '../../../redux/movie'
 const Details = () => {
   const { movie, loading } = useSelector((state: RootState) => state.movie);
 
-  console.log(movie, 'movie');
+  const movieDetails = movie[0] as primaryDetailsType;
 
-  const defaultDetails = movie[0] as MovieData
-  const castAndCrewDetails = movie[1] as MovieData
-  const imageDetails = movie[2] as MovieData
-  const videoDetails = movie[3] as MovieData
-  const reviewDetails = movie[4] as MovieData
+  const secondaryDetails: secondaryDetailsType =
+    movie[1] as secondaryDetailsType;
+
+  const imageDetails = movie[2] as MediaType;
+
+  const videoDetails: VideoType = movie[3] as VideoType;
+
+  const reviewDetails: ReviewItemType = movie[4] as ReviewItemType;
+
   return (
     <>
       {loading ? (
         <Spinner />
       ) : movie?.length !== 0 ? (
         <div className="movie-container">
-          <div className="movie-bg" style={{ backgroundImage: `url(${IMAGE_URL}${defaultDetails.backdrop_path})` }}></div>
+          <div
+            className="movie-bg"
+            style={{
+              backgroundImage: `url(${IMAGE_URL}${movieDetails.backdrop_path})`
+            }}
+          ></div>
 
           <div className="movie-overlay"></div>
 
           <div className="movie-details">
-
             <div className="movie-image">
-              <img src={`${IMAGE_URL}${defaultDetails.poster_path}`} alt="" />
+              <img src={`${IMAGE_URL}${movieDetails.poster_path}`} alt="" />
             </div>
 
             <div className="movie-body">
-
               <div className="movie-overview">
                 <div className="title">
-                  {defaultDetails?.title} <span>{defaultDetails?.release_date}</span>
+                  {movieDetails?.title}{' '}
+                  <span>{movieDetails?.release_date}</span>
                 </div>
 
                 <div className="movie-genres">
                   <ul className="genres">
-                    {defaultDetails?.genres?.map((genre: Genre) => (
+                    {movieDetails?.genres?.map((genre: Genre) => (
                       <li key={genre.id}>{genre.name}</li>
                     ))}
                   </ul>
@@ -58,31 +72,29 @@ const Details = () => {
                 <div className="rating">
                   <Rating
                     className="rating-stars"
-                    rating={defaultDetails?.vote_average}
-                    totalStars={10} />
+                    rating={movieDetails?.vote_average}
+                    totalStars={10}
+                  />
                   &nbsp;
-                  <span>{defaultDetails?.vote_average}</span>
-                  <p>({defaultDetails?.vote_count}) reviews</p>
+                  <span>{movieDetails?.vote_average}</span>
+                  <p>({movieDetails?.vote_count}) reviews</p>
                 </div>
 
                 <Tabs>
                   <div>
                     <Overview
-                      details={defaultDetails}
-                      credits={castAndCrewDetails} />
+                      details={movieDetails}
+                      credits={secondaryDetails}
+                    />
                   </div>
                   <div>
-                    <Crew
-                      crew={castAndCrewDetails} />
+                    <Crew crew={secondaryDetails} />
                   </div>
                   <div>
-                    <Media
-                      media={imageDetails}
-                      videos={videoDetails} />
+                    <Media media={imageDetails} videos={videoDetails} />
                   </div>
                   <div>
-                    <Reviews
-                      reviews={reviewDetails} />
+                    <Reviews reviews={reviewDetails} />
                   </div>
                 </Tabs>
               </div>

@@ -2,14 +2,9 @@ import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import { IMAGE_URL } from '../../../../services/movies.service';
-import { MovieData } from '../../../../redux/movie';
+import { CrewItemType, secondaryDetailsType } from '../../../../redux/types';
 
-type CrewType = {
-  crew: MovieData,
-}
-
-const Crew = ({ crew }: CrewType) => {
-
+const Crew = ({ crew }: { crew: secondaryDetailsType }) => {
   return (
     <>
       <div className="cast">
@@ -23,12 +18,16 @@ const Crew = ({ crew }: CrewType) => {
               <th className="head">Job</th>
             </tr>
           </thead>
-          {crew.crew.map((data: any) => (
+          {crew.crew.map((data: CrewItemType) => (
             <tbody key={uuidv4()}>
               <tr>
                 <td>
                   <img
-                    src={data.profile_path ? `${IMAGE_URL}${data.profile_path}` : 'http://placehold.it/54x81'}
+                    src={
+                      data.profile_path
+                        ? `${IMAGE_URL}${data.profile_path}`
+                        : 'http://placehold.it/54x81'
+                    }
                     alt=""
                   />
                 </td>

@@ -28,7 +28,7 @@ export type SpokenLanguage = {
   name: string;
 };
 
-export type Movie = {
+export type primaryDetailsType = {
   adult: boolean;
   backdrop_path: string;
   belongs_to_collection: Collection;
@@ -56,8 +56,7 @@ export type Movie = {
   vote_count: number;
 };
 
-// 
-
+//
 
 export type CastItemType = {
   adult: boolean;
@@ -86,6 +85,12 @@ export type CrewItemType = {
   credit_id: string;
   department: string;
   job: string;
+};
+
+export type secondaryDetailsType = {
+  cast: CastItemType[];
+  crew: CrewItemType[];
+  id: number;
 };
 
 export type BackdropItemType = {
@@ -118,6 +123,12 @@ export type PosterItemType = {
   width: number;
 };
 
+export type MediaType = {
+  backdrops: BackdropItemType;
+  logos: LogoItemType[];
+  posters: PosterItemType[];
+  id: number;
+};
 export type VideoItemType = {
   iso_639_1: string;
   iso_3166_1: string;
@@ -131,7 +142,12 @@ export type VideoItemType = {
   id: string;
 };
 
-export type ReviewItemType = {
+export type VideoType = {
+  results: VideoItemType[];
+  id: number;
+};
+
+export type ReviewResult = {
   author: string;
   author_details: {
     name: string;
@@ -146,6 +162,10 @@ export type ReviewItemType = {
   url: string;
 };
 
-
-
-
+export type ReviewItemType = {
+  id: number;
+  page: number;
+  results: ReviewResult[];
+  total_pages: number;
+  total_results: number;
+};

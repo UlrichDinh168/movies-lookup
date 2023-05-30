@@ -10,7 +10,12 @@ import { ThunkAction } from 'redux-thunk';
 // const baseURL = "http://localhost:8000";
 
 export type AppDispatch = typeof store.dispatch;
-export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, null, Action<string>>;
+export type AppThunk<ReturnType = void> = ThunkAction<
+  ReturnType,
+  RootState,
+  null,
+  Action<string>
+>;
 
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 

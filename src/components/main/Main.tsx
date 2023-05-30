@@ -10,8 +10,12 @@ import { _pathURL } from '../../redux/route';
 import SearchResult from '../content/searchResult/SearchResult';
 
 const Main = () => {
-  const { page, totalPages, searchResult, movieType, loading } = useSelector((state: RootState) => state.movie);
-  const { message, statusCode } = useSelector((state: RootState) => state.error);
+  const { page, totalPages, searchResult, movieType, loading } = useSelector(
+    (state: RootState) => state.movie
+  );
+  const { message, statusCode } = useSelector(
+    (state: RootState) => state.error
+  );
 
   const [currentPage, setCurrentPage] = useState(page);
   const mainRef = useRef<HTMLDivElement | null>(null);
@@ -44,7 +48,11 @@ const Main = () => {
     const containerHeight = mainRef.current?.getBoundingClientRect().height;
     const _bottomLineRef = bottomLineRef.current;
 
-    if (containerHeight !== undefined && _bottomLineRef !== undefined && _bottomLineRef !== null) {
+    if (
+      containerHeight !== undefined &&
+      _bottomLineRef !== undefined &&
+      _bottomLineRef !== null
+    ) {
       const { top: bottomLineTop } = _bottomLineRef.getBoundingClientRect();
       bottomLineTop <= containerHeight && fetchData();
     }
@@ -54,7 +62,13 @@ const Main = () => {
     <>
       {!message && !statusCode && (
         <div className="main" ref={mainRef} onScroll={handleScroll}>
-          {loading ? <Spinner /> : <>{searchResult?.length === 0 ? <MainContent /> : <SearchResult />}</>}
+          {loading ? (
+            <Spinner />
+          ) : (
+            <>
+              {searchResult?.length === 0 ? <MainContent /> : <SearchResult />}
+            </>
+          )}
           <div ref={bottomLineRef}></div>
         </div>
       )}

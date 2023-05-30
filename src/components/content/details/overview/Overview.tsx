@@ -2,9 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import { IMAGE_URL } from '../../../../services/movies.service';
-import { Movie, CrewItemType, CastItemType } from '../../../../redux/types';
-import { MovieData } from '../../../../redux/movie';
-
+import {
+  CastItemType,
+  primaryDetailsType,
+  secondaryDetailsType
+} from '../../../../redux/types';
+import {
+  ProductionCompany,
+  SpokenLanguage
+} from '../../../../redux/types/MovieType';
 
 type ItemDetail = {
   id: number;
@@ -12,14 +18,13 @@ type ItemDetail = {
   value: string;
 };
 
-type OverviewType = {
-  details: MovieData,
-  credits: MovieData
-}
-
-
-const Overview = ({ details, credits }: OverviewType) => {
-
+const Overview = ({
+  details,
+  credits
+}: {
+  details: primaryDetailsType;
+  credits: secondaryDetailsType;
+}) => {
   const numberFormatter = (number: number, digits: number) => {
     const symbolArray = [
       { value: 1, symbol: '' },
@@ -32,7 +37,9 @@ const Overview = ({ details, credits }: OverviewType) => {
 
     for (let i = 0; i < symbolArray.length; i++) {
       if (number >= symbolArray[i].value) {
-        result = (number / symbolArray[i].value).toFixed(digits).replace(regex, '$1') + symbolArray[i].symbol;
+        result =
+          (number / symbolArray[i].value).toFixed(digits).replace(regex, '$1') +
+          symbolArray[i].symbol;
       }
     }
     return result;
@@ -73,15 +80,11 @@ const Overview = ({ details, credits }: OverviewType) => {
 
   const [items, setItems] = useState<ItemDetail[]>([]);
 
-
   useEffect(() => {
-
     setItems(detailItems);
 
     // eslint-disable-next-line
   }, []);
-
-
 
   return (
     <div className="overview">
@@ -91,12 +94,16 @@ const Overview = ({ details, credits }: OverviewType) => {
         <div className="cast">
           <div className="div-title">Cast</div>
           <table>
-            {credits.cast.map((data: any) => (
+            {credits.cast.map((data: CastItemType) => (
               <tbody key={uuidv4()}>
                 <tr>
                   <td>
                     <img
-                      src={data.profile_path ? `${IMAGE_URL}${data.profile_path}` : 'http://placehold.it/54x81'}
+                      src={
+                        data.profile_path
+                          ? `${IMAGE_URL}${data.profile_path}`
+                          : 'http://placehold.it/54x81'
+                      }
                       alt=""
                     />
                   </td>
@@ -111,9 +118,16 @@ const Overview = ({ details, credits }: OverviewType) => {
       <div className="overview-column-2">
         <div className="overview-detail">
           <h6>Production Companies</h6>
-          {details.production_companies.map((prod: any) => (
+          {details.production_companies.map((prod: ProductionCompany) => (
             <div className="product-company" key={uuidv4()}>
-              <img src={prod.logo_path ? `${IMAGE_URL}${prod.logo_path}` : 'http://placehold.it/30x30'} alt="" />
+              <img
+                src={
+                  prod.logo_path
+                    ? `${IMAGE_URL}${prod.logo_path}`
+                    : 'http://placehold.it/30x30'
+                }
+                alt=""
+              />
               <span>{prod.name}</span>
             </div>
           ))}
@@ -121,14 +135,14 @@ const Overview = ({ details, credits }: OverviewType) => {
         <div className="overview-detail">
           <h6>Language(s)</h6>
           <p>
-            {details.spoken_languages.map((language: any) => (
+            {details.spoken_languages.map((language: SpokenLanguage) => (
               <a href="!#" key={language.name}>
                 {language.name}
               </a>
             ))}
           </p>
         </div>
-        {items.map((data: any) => (
+        {items.map((data: ItemDetail) => (
           <div className="overview-detail" key={data.id}>
             <h6>{data.name}</h6>
             <p>

@@ -3,7 +3,9 @@ import Tab from './Tab';
 
 const Tabs = (props: any) => {
   const { children } = props;
-  const [activeTab, setActiveTab] = useState(children[0].props.children.type.name);
+  const [activeTab, setActiveTab] = useState(
+    children[0].props.children.type.name
+  );
 
   const onClickTabItem = (tab: any) => {
     setActiveTab(tab);
@@ -14,7 +16,14 @@ const Tabs = (props: any) => {
       <ol className="tab-list">
         {children.map((child: any, index: number) => {
           const { name } = child.props.children.type;
-          return <Tab activeTab={activeTab} key={index} label={name} onClick={onClickTabItem} />;
+          return (
+            <Tab
+              activeTab={activeTab}
+              key={index}
+              label={name}
+              onClick={onClickTabItem}
+            />
+          );
         })}
       </ol>
       <div className="tab-content">

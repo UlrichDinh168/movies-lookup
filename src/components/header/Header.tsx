@@ -43,9 +43,13 @@ const HEADER_LIST = [
 ];
 
 const Header = () => {
-  const { url, routesArray, path } = useSelector((state: RootState) => state.route);
+  const { url, routesArray, path } = useSelector(
+    (state: RootState) => state.route
+  );
   const { page, totalPages } = useSelector((state: RootState) => state.movie);
-  const { message, statusCode } = useSelector((state: RootState) => state.error);
+  const { message, statusCode } = useSelector(
+    (state: RootState) => state.error
+  );
 
   const [type, setType] = useState('now_playing');
   const [search, setSearch] = useState('');
@@ -87,7 +91,10 @@ const Header = () => {
           _pathURL('/', '/');
 
           // const error = new Error(`Page with pathname ${location.pathname} not found with status code 404.`);
-          setError({ message: `Page with pathname ${location.pathname} not found.`, statusCode: 404 });
+          setError({
+            message: `Page with pathname ${location.pathname} not found.`,
+            statusCode: 404
+          });
         }
       }
     }
@@ -102,7 +109,10 @@ const Header = () => {
       if (message || statusCode) {
         _pathURL('/', '/');
         const error = new Error(`${message} With status code ${statusCode} `);
-        setError({ message: `Page with pathname ${location.pathname} not found.`, statusCode: 404 });
+        setError({
+          message: `Page with pathname ${location.pathname} not found.`,
+          statusCode: 404
+        });
         throw error;
       }
     }
@@ -152,7 +162,11 @@ const Header = () => {
               <img src={logo} alt="" />
             </div>
             <div
-              className={`${isToggle ? 'header-menu-toggle header-nav-open is-active' : 'header-menu-toggle'}`}
+              className={`${
+                isToggle
+                  ? 'header-menu-toggle header-nav-open is-active'
+                  : 'header-menu-toggle'
+              }`}
               id="header-mobile-menu"
               onClick={() => toggleMenu()}
             >
@@ -160,11 +174,19 @@ const Header = () => {
               <span className="bar"></span>
               <span className="bar"></span>
             </div>
-            <ul className={`${isToggle ? 'header-nav header-mobile-nav' : 'header-nav'}`}>
+            <ul
+              className={`${
+                isToggle ? 'header-nav header-mobile-nav' : 'header-nav'
+              }`}
+            >
               {HEADER_LIST.map((data) => (
                 <li
                   key={data.id}
-                  className={data.type === type ? 'header-nav-item active-item' : 'header-nav-item'}
+                  className={
+                    data.type === type
+                      ? 'header-nav-item active-item'
+                      : 'header-nav-item'
+                  }
                   onClick={() => setMovieTypeUrl(data.type)}
                 >
                   <span className="header-list-name">

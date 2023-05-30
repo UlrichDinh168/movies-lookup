@@ -1,10 +1,10 @@
 import React, { useState, useEffect, Fragment, useRef } from 'react';
 
 type RatingType = {
-  rating: number,
-  totalStars: number,
-  className: string
-}
+  rating: number;
+  totalStars: number;
+  className?: string;
+};
 
 const Rating = ({ rating, totalStars, className }: RatingType) => {
   const [numberOfStars, setNumberOfStars] = useState<number[]>([]);
