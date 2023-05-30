@@ -19,9 +19,11 @@ type ItemDetail = {
 };
 
 const Overview = ({
+  name,
   details,
   credits
 }: {
+  name: string
   details: primaryDetailsType;
   credits: secondaryDetailsType;
 }) => {

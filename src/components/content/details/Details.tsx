@@ -86,23 +86,29 @@ const Details = () => {
                 </div>
 
                 <Tabs>
-                  <div>
+                  <div >
                     <Overview
+                      name='Overview'
                       details={movieDetails}
                       credits={secondaryDetails}
                     />
                   </div>
                   <div>
-                    <Crew crew={secondaryDetails} />
+                    <Crew
+                      name='Crew'
+                      crew={secondaryDetails} />
                   </div>
                   <div>
                     <Media
+                      name='Media'
                       media={imageDetails}
                       videos={videoDetails}
                     />
                   </div>
                   <div>
-                    <Reviews reviews={reviewDetails} />
+                    <Reviews
+                      name='Reviews'
+                      reviews={reviewDetails} />
                   </div>
                 </Tabs>
               </div>
