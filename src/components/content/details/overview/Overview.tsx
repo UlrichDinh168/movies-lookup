@@ -1,58 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-import { IMAGE_URL } from '../services/movies.service';
+import { IMAGE_URL } from '../../../../services/movies.service';
+import { Movie, CrewItemType, CastItemType } from '../../../../redux/types';
+import { MovieData } from '../../../../redux/movie';
+
 
 type ItemDetail = {
-  id: number,
-  name: string,
-  value: string
+  id: number;
+  name: string;
+  value: string;
+};
 
+type OverviewType = {
+  details: MovieData,
+  credits: MovieData
 }
-const Overview = ({ movie }: any) => {
-  console.log(movie, 'movie');
 
-  const [items, setItems] = useState<any>([]);
-  const [details] = useState(movie[0]);
-  const [credits] = useState(movie[1]);
 
-  useEffect(() => {
-    const detailItems: ItemDetail[] = [
-      {
-        id: 0,
-        name: 'Tagline',
-        value: `${details.tagline}`
-      },
-      {
-        id: 1,
-        name: 'Budget',
-        value: `${numberFormatter(details.budget, 1)}`
-      },
-      {
-        id: 2,
-        name: 'Revenue',
-        value: `${numberFormatter(details.revenue, 1)}`
-      },
-      {
-        id: 3,
-        name: 'Status',
-        value: `${details.status}`
-      },
-      {
-        id: 4,
-        name: 'Release Date',
-        value: `${details.release_date}`
-      },
-      {
-        id: 5,
-        name: 'Run Time',
-        value: `${details.runtime} min`
-      }
-    ];
-    setItems(detailItems);
-
-    // eslint-disable-next-line
-  }, []);
+const Overview = ({ details, credits }: OverviewType) => {
 
   const numberFormatter = (number: number, digits: number) => {
     const symbolArray = [
@@ -72,6 +38,51 @@ const Overview = ({ movie }: any) => {
     return result;
   };
 
+  const detailItems: ItemDetail[] = [
+    {
+      id: 0,
+      name: 'Tagline',
+      value: `${details.tagline}`
+    },
+    {
+      id: 1,
+      name: 'Budget',
+      value: `${numberFormatter(details.budget, 1)}`
+    },
+    {
+      id: 2,
+      name: 'Revenue',
+      value: `${numberFormatter(details.revenue, 1)}`
+    },
+    {
+      id: 3,
+      name: 'Status',
+      value: `${details.status}`
+    },
+    {
+      id: 4,
+      name: 'Release Date',
+      value: `${details.release_date}`
+    },
+    {
+      id: 5,
+      name: 'Run Time',
+      value: `${details.runtime} min`
+    }
+  ];
+
+  const [items, setItems] = useState<ItemDetail[]>([]);
+
+
+  useEffect(() => {
+
+    setItems(detailItems);
+
+    // eslint-disable-next-line
+  }, []);
+
+
+
   return (
     <div className="overview">
       <div className="overview-column-1">
@@ -84,7 +95,10 @@ const Overview = ({ movie }: any) => {
               <tbody key={uuidv4()}>
                 <tr>
                   <td>
-                    <img src={data.profile_path ? `${IMAGE_URL}${data.profile_path}` : 'http://placehold.it/54x81'} alt="" />
+                    <img
+                      src={data.profile_path ? `${IMAGE_URL}${data.profile_path}` : 'http://placehold.it/54x81'}
+                      alt=""
+                    />
                   </td>
                   <td>{data.name}</td>
                   <td>{data.character}</td>
@@ -126,7 +140,5 @@ const Overview = ({ movie }: any) => {
     </div>
   );
 };
-
-
 
 export default Overview;

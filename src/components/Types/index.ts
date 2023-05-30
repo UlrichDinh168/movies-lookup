@@ -1,4 +1,4 @@
 export type ImageObjType = {
-  id: number,
-  url: string
-}
+  id: number;
+  url: string;
+};

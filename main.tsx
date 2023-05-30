@@ -6,11 +6,10 @@ import App from './src/App.tsx';
 import { store } from './src/store.ts';
 import * as Sentry from '@sentry/browser';
 
-
 if (process.env.NODE_ENV === 'production') {
   Sentry.init({
     dsn: process.env.REACT_APP_SENTRY_DSN,
-    beforeBreadcrumb(breadcrumb,) {
+    beforeBreadcrumb(breadcrumb) {
       return breadcrumb.category === 'ui.click' ? null : breadcrumb;
     }
   });
@@ -18,10 +17,10 @@ if (process.env.NODE_ENV === 'production') {
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
-
 root.render(
   <React.StrictMode>
     <Provider store={store}>
       <App />
     </Provider>
-  </React.StrictMode>);
+  </React.StrictMode>
+);

@@ -1,7 +1,7 @@
-import { combineReducers } from "redux";
-import movieReducer from "./movie";
-import routeReducer from "./route";
-import errorReducer from "./error";
+import { combineReducers } from 'redux';
+import movieReducer from './movie';
+import routeReducer from './route';
+import errorReducer from './error';
 
 export const rootReducer = combineReducers({
   movie: movieReducer,
@@ -9,4 +9,4 @@ export const rootReducer = combineReducers({
   error: errorReducer
 });
 
-export type RootState = ReturnType<typeof rootReducer>
+export type RootState = ReturnType<typeof rootReducer>;

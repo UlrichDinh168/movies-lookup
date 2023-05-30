@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-import { IMAGE_URL } from '../services/movies.service';
+import { IMAGE_URL } from '../../../../services/movies.service';
+import { MovieData } from '../../../../redux/movie';
 
-const Crew = ({ movie }: any) => {
+type CrewType = {
+  crew: MovieData,
+}
 
-  const [credits] = useState(movie[1]);
+const Crew = ({ crew }: CrewType) => {
 
   return (
     <>
@@ -20,11 +23,14 @@ const Crew = ({ movie }: any) => {
               <th className="head">Job</th>
             </tr>
           </thead>
-          {credits?.crew.map((data: any) => (
+          {crew.crew.map((data: any) => (
             <tbody key={uuidv4()}>
               <tr>
                 <td>
-                  <img src={data.profile_path ? `${IMAGE_URL}${data.profile_path}` : 'http://placehold.it/54x81'} alt="" />
+                  <img
+                    src={data.profile_path ? `${IMAGE_URL}${data.profile_path}` : 'http://placehold.it/54x81'}
+                    alt=""
+                  />
                 </td>
                 <td>{data.name}</td>
                 <td>{data.department}</td>
@@ -37,7 +43,5 @@ const Crew = ({ movie }: any) => {
     </>
   );
 };
-
-
 
 export default Crew;

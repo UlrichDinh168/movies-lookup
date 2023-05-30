@@ -1,14 +1,14 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit';
 
 export type Errors = {
-  message: '',
-  statusCode: null
+  message: '';
+  statusCode: null;
 };
 
 const initialState = {
   message: '',
   statusCode: null
-} as Errors
+} as Errors;
 
 export const ErrorSlice = createSlice({
   name: 'ErrorSlice',
@@ -19,11 +19,11 @@ export const ErrorSlice = createSlice({
         ...state,
         message: action.payload.message,
         statusCode: action.payload.statusCode
-      }
+      };
     }
   }
 });
 
-export default ErrorSlice.reducer
+export default ErrorSlice.reducer;
 
-export const { setError } = ErrorSlice.actions
+export const { setError } = ErrorSlice.actions;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, ChangeEvent } from 'react';
 // import PropTypes from 'prop-types';
 import { useNavigate, useLocation, useMatch } from 'react-router-dom';
 import logo from '/assets/cinema-logo.svg';
@@ -8,12 +8,12 @@ import {
   setResponsePageNumber,
   searchQuery,
   searchResult,
-  clearMovieDetails,
-} from '../redux/movie';
-import { _pathURL } from '../redux/route';
-import { setError } from '../redux/error';
+  clearMovieDetails
+} from '../../redux/movie';
+import { _pathURL } from '../../redux/route';
+import { setError } from '../../redux/error';
 import { useSelector } from 'react-redux';
-import { RootState } from '../redux';
+import { RootState } from '../../redux';
 
 const HEADER_LIST = [
   {
@@ -43,55 +43,45 @@ const HEADER_LIST = [
 ];
 
 const Header = () => {
-
-  const { url, routesArray, path } = useSelector((state: RootState) => state.route)
-  const { page, totalPages } = useSelector((state: RootState) => state.movie)
-  const { message, statusCode } = useSelector((state: RootState) => state.error)
+  const { url, routesArray, path } = useSelector((state: RootState) => state.route);
+  const { page, totalPages } = useSelector((state: RootState) => state.movie);
+  const { message, statusCode } = useSelector((state: RootState) => state.error);
 
   const [type, setType] = useState('now_playing');
   const [search, setSearch] = useState('');
   const [disableSearch, setDisableSearch] = useState(false);
   const [hideHeader, setHideHeader] = useState(false);
 
-  const [isToggle, setIsToggle] = useState(false)
+  const [isToggle, setIsToggle] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
   const detailsRoute = useMatch('/:id/:name/details');
 
-  const effectRan = useRef(false)
+  const effectRan = useRef(false);
 
   useEffect(() => {
-
     if (effectRan.current === false) {
-      console.log('Head1');
+      if (location.pathname && !message && !statusCode) {
+        getMovies(type, page);
+        setResponsePageNumber(page, totalPages);
+        if (detailsRoute || location.pathname === '/') {
+          setHideHeader(true);
+        }
 
-      if (effectRan.current === false) {
-
-        if (location.pathname && !message && !statusCode) {
-          getMovies(type, page);
-          setResponsePageNumber(page, totalPages);
-          if (detailsRoute || location.pathname === '/') {
-            setHideHeader(true);
-          }
-
-          if (location.pathname !== '/' && location.key) {
-            setDisableSearch(true);
-          }
+        if (location.pathname !== '/' && location.key) {
+          setDisableSearch(true);
         }
       }
     }
     return () => {
-      effectRan.current = true
-    }
+      effectRan.current = true;
+    };
     // eslint-disable-next-line
   }, [type, disableSearch, location]);
 
-
   useEffect(() => {
-
     if (effectRan.current === false) {
-      console.log('Head2');
       if (routesArray.length === 0) {
         if (!path && !url) {
           _pathURL('/', '/');
@@ -102,16 +92,13 @@ const Header = () => {
       }
     }
     return () => {
-      effectRan.current = true
-    }
+      effectRan.current = true;
+    };
     // eslint-disable-next-line
-  }, [path, url, routesArray,]);
-
+  }, [path, url, routesArray]);
 
   useEffect(() => {
     if (effectRan.current === false) {
-      console.log('Head3');
-
       if (message || statusCode) {
         _pathURL('/', '/');
         const error = new Error(`${message} With status code ${statusCode} `);
@@ -121,13 +108,12 @@ const Header = () => {
     }
 
     return () => {
-      effectRan.current = true
-    }
+      effectRan.current = true;
+    };
     // eslint-disable-next-line
   }, [message, statusCode]);
 
-
-  const setMovieTypeUrl = (type: any) => {
+  const setMovieTypeUrl = (type: string) => {
     setDisableSearch(false);
     if (location.pathname !== '/') {
       clearMovieDetails();
@@ -140,7 +126,7 @@ const Header = () => {
     }
   };
 
-  const onSearchChange = (e: any) => {
+  const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
     searchQuery(e.target.value);
     searchResult(e.target.value);
@@ -219,6 +205,5 @@ const Header = () => {
 //   setError: PropTypes.func,
 //   errors: PropTypes.object
 // };
-
 
 export default Header;

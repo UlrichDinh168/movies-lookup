@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-
-const Reviews = (props: any) => {
-  const { movie } = props;
-  const [reviews] = useState(movie[4]);
+const Reviews = ({ reviews }: any) => {
 
   return (
     <>
@@ -24,7 +21,5 @@ const Reviews = (props: any) => {
     </>
   );
 };
-
-
 
 export default Reviews;

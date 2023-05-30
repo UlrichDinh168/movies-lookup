@@ -2,9 +2,9 @@ import React, { useState, useEffect, Fragment } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Link } from 'react-router-dom';
 
-import Rating from './Rating';
-import { IMAGE_URL } from '../services/movies.service';
-import LazyImage from './LazyImage';
+import Rating from '../rating/Rating';
+import { IMAGE_URL } from '../../../services/movies.service';
+import LazyImage from '../../lazyImage/LazyImage';
 
 const SearchResult = (props: any) => {
   const { searchResult, searchQuery } = props;
@@ -50,6 +50,5 @@ const SearchResult = (props: any) => {
     </div>
   );
 };
-
 
 export default SearchResult;

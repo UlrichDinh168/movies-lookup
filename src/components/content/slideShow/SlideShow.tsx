@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { ImageObjType } from './Types'
+import { ImageObjType } from '../../Types';
 
 type SlideShow = {
-  images: ImageObjType[], auto: boolean, showArrows: boolean
-}
+  images: ImageObjType[];
+  auto: boolean;
+  showArrows: boolean;
+};
 type StateType = {
   slideShow: ImageObjType;
   slideIndex: number;
 };
 type IndicatorProps = {
-  currentSlide: number
-}
+  currentSlide: number;
+};
 
 const Slideshow = (props: SlideShow) => {
   const { images, auto, showArrows } = props;
@@ -100,13 +102,16 @@ const Slideshow = (props: SlideShow) => {
   return (
     <>
       <div className="slider">
-        <div className="slider-slides">{images && images.length && slideShow && <div className="slider-image" style={{ backgroundImage: `url(${slideShow.url})` }}></div>}</div>
+        <div className="slider-slides">
+          {images && images.length && slideShow && (
+            <div className="slider-image" style={{ backgroundImage: `url(${slideShow.url})` }}></div>
+          )}
+        </div>
         <Indicators currentSlide={slideIndex} />
         {showArrows ? <RenderArrows /> : null}
       </div>
     </>
   );
 };
-
 
 export default Slideshow;

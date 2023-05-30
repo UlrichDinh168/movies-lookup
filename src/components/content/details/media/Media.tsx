@@ -1,11 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import { IMAGE_URL } from '../services/movies.service';
+import { IMAGE_URL } from '../../../../services/movies.service';
 
-const Media = ({ movie }: any) => {
-
-  const [media] = useState(movie[2]);
-  const [videos] = useState(movie[3]);
+const Media = ({ media, videos }: any) => {
 
   return (
     <>
@@ -22,7 +19,6 @@ const Media = ({ movie }: any) => {
                     height: '100%'
                   }}
                   src={`https://www.youtube.com/embed/${data.key}`}
-                  frameBorder="0"
                   allowFullScreen
                 />
               </div>
@@ -47,7 +43,5 @@ const Media = ({ movie }: any) => {
     </>
   );
 };
-
-
 
 export default Media;

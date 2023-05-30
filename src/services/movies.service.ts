@@ -4,7 +4,7 @@ const REQUEST_URL = 'https://api.themoviedb.org/3';
 export const IMAGE_URL = 'https://image.tmdb.org/t/p/original';
 
 const API_KEY = import.meta.env.VITE_API_SECRET;
-const API_KEY_URL = `?api_key=${API_KEY}&language=en-US`
+const API_KEY_URL = `?api_key=${API_KEY}&language=en-US`;
 
 export const MOVIE_API_URL = async (type: string, page: number) => {
   const response = await axios.get(`${REQUEST_URL}/movie/${type}${API_KEY_URL}&page=${page}`);

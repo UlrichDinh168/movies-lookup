@@ -13,7 +13,6 @@ const Tabs = (props: any) => {
     <div className="tabs">
       <ol className="tab-list">
         {children.map((child: any, index: number) => {
-
           const { name } = child.props.children.type;
           return <Tab activeTab={activeTab} key={index} label={name} onClick={onClickTabItem} />;
         })}
@@ -27,6 +26,5 @@ const Tabs = (props: any) => {
     </div>
   );
 };
-
 
 export default Tabs;
