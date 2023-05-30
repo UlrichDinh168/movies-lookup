@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import placeHolder from '../../../dist/assets/lazy_loader.gif';
+import placeHolder from '../../../public/assets/cinema-logo.svg';
 
 const LazyImage = (props: any) => {
   const { src, children, className } = props;
