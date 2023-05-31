@@ -182,7 +182,7 @@ export const searchResult = async (query: any) => {
   }
 };
 
-export const movieDetails = async (id: string) => {
+export const movieDetails = async (id: number) => {
   try {
     const details = await MOVIE_DETAILS_URL(id);
     const credits = await MOVIE_CREDITS_URL(id);

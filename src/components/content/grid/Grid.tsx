@@ -25,13 +25,13 @@ const Grid = () => {
     return titleStr.replace(/ /g, '-');
   };
 
-  const fetchMovieDetail = async (id: string, title: string) => {
+  const fetchMovieDetail = async (id: number, title: string) => {
     try {
       setLoading(true);
       await movieDetails(id);
       history(`/${id}/${formatMovieTitle(title)}/details`);
     } catch (error) {
-      console.log(error, 'error');
+      throw Error;
     } finally {
       setLoading(false);
     }

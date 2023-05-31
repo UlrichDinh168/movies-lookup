@@ -1,10 +1,8 @@
 import { configureStore, Action } from '@reduxjs/toolkit';
 import { rootReducer, RootState } from './redux/index.js';
-import thunk from 'redux-thunk';
 import { useDispatch } from 'react-redux';
 import logger from 'redux-logger';
-
-import { ThunkAction } from 'redux-thunk';
+import thunk, { ThunkAction } from 'redux-thunk';
 
 // const baseURL = BACKEND_BASE_URL || "http://localhost:8000";
 // const baseURL = "http://localhost:8000";

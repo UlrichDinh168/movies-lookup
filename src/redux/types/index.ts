@@ -10,7 +10,8 @@ import {
   ReviewResult,
   VideoType,
   MediaType,
-  secondaryDetailsType
+  secondaryDetailsType,
+  MovieList
 } from './MovieType';
 
 export {
@@ -25,5 +26,6 @@ export {
   BackdropItemType,
   VideoType,
   MediaType,
-  secondaryDetailsType
+  secondaryDetailsType,
+  MovieList
 };
