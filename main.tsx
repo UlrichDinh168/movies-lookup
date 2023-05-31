@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import './index.scss';
-import App from './src/App.tsx';
-import { store } from './src/store.ts';
+import App from './src/App';
+import { store } from './src/store';
 import * as Sentry from '@sentry/browser';
 
 if (process.env.NODE_ENV === 'production') {
