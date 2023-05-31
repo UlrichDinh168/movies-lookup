@@ -7,7 +7,12 @@ import {
   secondaryDetailsType
 } from '../../../../redux/types';
 
-const Crew = ({ name, crew }: { name: string, crew: secondaryDetailsType }) => {
+const Crew = ({
+  crew
+}: {
+  name?: string;
+  crew: secondaryDetailsType;
+}) => {
   return (
     <>
       <div className="cast">

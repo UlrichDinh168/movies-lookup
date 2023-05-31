@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { store } from './store.js';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import ErrorBoundary from './components/Errors/ErrorBoundary.js';
+// import ErrorBoundary from './components/Errors/ErrorBoundary.js';
 import Header from './components/header/Header.js';
 import Main from './components/main/Main.js';
 import Details from './components/content/details/Details.js';

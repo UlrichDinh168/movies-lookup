@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Tab from './Tab';
 
-
 type TabProps = {
   name: string;
   children: React.ReactNode;
@@ -52,7 +51,11 @@ const Tabs = (props: TabsProps) => {
       </ol>
       <div className="tab-content">
         {React.Children.map(children, (child) => {
-          if (!React.isValidElement(child) || !child.props.children || !React.isValidElement(child.props.children)) {
+          if (
+            !React.isValidElement(child) ||
+            !child.props.children ||
+            !React.isValidElement(child.props.children)
+          ) {
             return null;
           }
 

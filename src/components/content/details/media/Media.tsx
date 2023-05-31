@@ -9,11 +9,10 @@ import {
 } from '../../../../redux/types';
 
 const Media = ({
-  name,
   media,
   videos
 }: {
-  name: string,
+  name?: string;
   media: MediaType;
   videos: VideoType;
 }) => {

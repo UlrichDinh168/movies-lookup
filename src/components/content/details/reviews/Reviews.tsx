@@ -6,11 +6,11 @@ import {
 } from '../../../../redux/types';
 
 type ReviewType = {
-  name: string
+  name?: string;
   reviews: ReviewItemType;
 };
 
-const Reviews = ({ name, reviews }: ReviewType) => {
+const Reviews = ({ reviews }: ReviewType) => {
   return (
     <>
       <div className="movie-reviews">
