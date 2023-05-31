@@ -1,4 +1,4 @@
-# Movies finder
+# Movies lookup
 
 # Live demo: https://movies-lookup.netlify.app/
 
