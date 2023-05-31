@@ -2,6 +2,7 @@
   "compilerOptions": {
     "pretty": true,
     "target": "ESNext",
+    "types": ["vite/client"],
     "module": "ESNext",
     "moduleResolution": "node",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],

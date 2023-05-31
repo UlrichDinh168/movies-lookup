@@ -6,9 +6,9 @@ import App from './src/App';
 import { store } from './src/store';
 import * as Sentry from '@sentry/browser';
 
-if (process.env.NODE_ENV === 'production') {
+if (import.meta.env.NODE_ENV !== 'production') {
   Sentry.init({
-    dsn: process.env.REACT_APP_SENTRY_DSN,
+    dsn: import.meta.env.REACT_APP_SENTRY_DSN,
     beforeBreadcrumb(breadcrumb) {
       return breadcrumb.category === 'ui.click' ? null : breadcrumb;
     }

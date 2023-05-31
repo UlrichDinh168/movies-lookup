@@ -16,7 +16,7 @@ class ErrorBoundary extends Component<any, any> {
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
     this.setState({ error, errorInfo });
-    if (process.env.NODE_ENV === 'production') {
+    if (import.meta.env.NODE_ENV !== 'production') {
       Sentry.withScope((scope) => {
         scope.setTag('Custom-Tag', 'ErrorBoundary');
         // scope.setLevel(level);
