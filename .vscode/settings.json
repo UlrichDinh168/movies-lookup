@@ -6,8 +6,8 @@
   "tailwindCSS.includeLanguages": {
     "plaintext": "html"
   },
-  "editor.fontSize": 12,
-  "window.zoomLevel": 0,
+  "editor.fontSize": 14,
+  "window.zoomLevel": 1,
   "editor.quickSuggestions": {
     "strings": true
   }

@@ -1,39 +1,48 @@
-import React, { Component } from 'react';
-import * as Sentry from '@sentry/browser';
-
+import React, { Component, ErrorInfo } from 'react';
 import ErrorPage from './ErrorPage';
 
-class ErrorBoundary extends Component<any, any> {
-  constructor(props: any) {
+type ErrorBoundaryProps = {
+  children: React.ReactNode;
+  fallback: React.ReactNode;
+}
+
+type ErrorBoundaryState = {
+  error: Error | null;
+  errorInfo: ErrorInfo | null;
+  eventId: string | null;
+}
+
+
+class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  constructor(props: ErrorBoundaryProps) {
     super(props);
-    this.state = { error: null, errorInfo: null, eventId: null };
+    this.state = {
+      error: null,
+      errorInfo: null,
+      eventId: null
+    };
     this.clearState = this.clearState.bind(this);
   }
 
-  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     this.setState({ error, errorInfo });
-    if (process.env.NODE_ENV === 'production') {
-      Sentry.withScope((scope) => {
-        scope.setTag('Custom-Tag', 'ErrorBoundary');
-        // scope.setLevel(level);
-        // scope.setExtras(errorInfo);
-        const eventId = Sentry.captureException(error);
-        this.setState({ eventId });
-      });
-    }
   }
 
   // reset state property to take user back to Home page
   clearState() {
-    this.setState({ error: null, errorInfo: null, eventId: null });
+    this.setState({
+      error: null,
+      errorInfo: null,
+      eventId: null
+    });
   }
 
   render() {
-    if (this.state?.error !== null) {
+    if (this.state.error) {
       return <ErrorPage clearState={this.clearState} />;
     }
+    return this.props.children
   }
 }
-
 
 export default ErrorBoundary;

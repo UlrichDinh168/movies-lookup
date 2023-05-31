@@ -13,11 +13,14 @@
     padding: 0.5em;
     border-radius: 3px;
     text-align: center;
+    width: fit-content;
     text-decoration: none !important;
   }
 
   .error-link:hover {
     color: #ffffff;
+    cursor: pointer;
+    opacity: 0.7;
   }
 
   .error-msg {

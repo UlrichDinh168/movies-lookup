@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
-const Tab = (props: any) => {
+type TabType = {
+  activeTab: string;
+  label: string;
+  onClick: (tab: string) => void;
+};
+const Tab = (props: TabType) => {
   const { activeTab, label, onClick } = props;
   const [className, setClassName] = useState('tab-list-item');
 
@@ -24,6 +29,5 @@ const Tab = (props: any) => {
     </>
   );
 };
-
 
 export default Tab;

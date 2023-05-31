@@ -1,19 +1,19 @@
 import React, { useEffect, useRef } from 'react';
-import { store } from "./store.js";
-import { Provider, } from "react-redux";
+import { store } from './store';
+import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import ErrorBoundary from './components/Errors/ErrorBoundary.js';
-import Header from './components/Header.js';
-import Main from './components/Main.js';
-import Details from './components/Details.js';
+import ErrorBoundary from './components/Errors/ErrorBoundary';
+import Header from './components/header/Header';
+import Main from './components/main/Main';
+import Details from './components/content/details/Details';
 import AppRoutes from './routes';
-import { _appRoutes } from './redux/route.js'
-
+import { appRoutes } from './redux/route';
+import { Route } from './redux/types/RouteType'
 
 const App = () => {
-  const effectRan = useRef(false)
+  const effectRan = useRef(false);
 
-  const routesArray = [
+  const routesArray: Route[] = [
     {
       id: 1,
       path: '/',
@@ -28,25 +28,23 @@ const App = () => {
 
   useEffect(() => {
     if (effectRan.current === false) {
-      (_appRoutes(routesArray));
+      appRoutes(routesArray);
     }
     return () => {
-      effectRan.current = true
-    }
-  }, [routesArray, _appRoutes]);
+      effectRan.current = true;
+    };
+  }, [routesArray, appRoutes]);
 
   return (
     <BrowserRouter>
-      {/* <ErrorBoundary> */}
-      <Header />
-      {/* </ErrorBoundary> */}
+      <ErrorBoundary fallback={<div>Error page</div>}>
+        <Header />
+      </ErrorBoundary>
       <Provider store={store}>
         <AppRoutes />
       </Provider>
     </BrowserRouter>
-
-
   );
-}
+};
 
 export default App;

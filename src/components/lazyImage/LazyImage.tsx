@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 
 import placeHolder from '/assets/lazy_loader.gif';
 
@@ -17,7 +16,10 @@ const LazyImage = (props: any) => {
         observer = new IntersectionObserver(
           (entries) => {
             entries.forEach((entry) => {
-              if (!didCancel && (entry.intersectionRatio > 0 || entry.isIntersecting)) {
+              if (
+                !didCancel &&
+                (entry.intersectionRatio > 0 || entry.isIntersecting)
+              ) {
                 setImageSrc(src);
                 observer.unobserve(imageRef);
               }
@@ -44,7 +46,13 @@ const LazyImage = (props: any) => {
 
   return (
     <>
-      <div className={className} ref={setImageRef} style={{ backgroundImage: `url(${imageSrc})` }} >
+      <div
+        className={className}
+        ref={setImageRef}
+        style={{
+          backgroundImage: `url(${imageSrc})`
+        }}
+      >
         {children}
       </div>
     </>

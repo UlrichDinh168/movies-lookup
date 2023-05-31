@@ -2,11 +2,12 @@
   "compilerOptions": {
     "pretty": true,
     "target": "ESNext",
+    "types": ["vite/client", "node"],
     "module": "ESNext",
     "moduleResolution": "node",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "skipLibCheck": true,
-    "isolatedModules": true,
+    "isolatedModules": false,
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "jsx": "react",
@@ -35,6 +36,12 @@
     "transpileOnly": true,
     "transpiler": "ts-node/transpilers/swc-experimental"
   },
-  "include": ["/**/*.ts", "/**/*.tsx", "main.tsx", "vite-env.d.ts", "src/App.tsx"],
+  "include": [
+    "/**/*.ts",
+    "/**/*.tsx",
+    "main.tsx",
+    "vite-env.d.ts",
+    "src/App.tsx"
+  ],
   "exclude": ["node_modules", "dist"]
 }

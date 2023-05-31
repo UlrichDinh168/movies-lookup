@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { ImageObjType } from './Types'
+
+export type ImageObjType = {
+  id: number;
+  url: string;
+};
 
 type SlideShow = {
-  images: ImageObjType[], auto: boolean, showArrows: boolean
-}
+  images: ImageObjType[];
+  auto: boolean;
+  showArrows: boolean;
+};
 type StateType = {
   slideShow: ImageObjType;
   slideIndex: number;
 };
 type IndicatorProps = {
-  currentSlide: number
-}
+  currentSlide: number;
+};
 
 const Slideshow = (props: SlideShow) => {
   const { images, auto, showArrows } = props;
@@ -19,9 +25,12 @@ const Slideshow = (props: SlideShow) => {
     slideIndex: 0
   });
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [sliderInterval, setSliderInterval] = useState<NodeJS.Timeout | number>(0);
+  const [sliderInterval, setSliderInterval] = useState<
+    NodeJS.Timeout | number
+  >(0);
 
   const { slideShow, slideIndex } = state;
+
   let currentSlideIndex = 0;
 
   useEffect(() => {
@@ -83,15 +92,24 @@ const Slideshow = (props: SlideShow) => {
   const RenderArrows = () => {
     return (
       <div className="slider-arrows">
-        <div className="slider-arrow slider-arrow--left" onClick={() => moveSlideWithArrows('prev')} />
-        <div className="slider-arrow slider-arrow--right" onClick={() => moveSlideWithArrows('next')} />
+        <div
+          className="slider-arrow slider-arrow--left"
+          onClick={() => moveSlideWithArrows('prev')}
+        />
+        <div
+          className="slider-arrow slider-arrow--right"
+          onClick={() => moveSlideWithArrows('next')}
+        />
       </div>
     );
   };
 
   const Indicators = ({ currentSlide }: IndicatorProps) => {
     const listIndicators = images.map((slide, i) => {
-      const btnClasses = i === currentSlide ? 'slider-navButton slider-navButton--active' : 'slider-navButton';
+      const btnClasses =
+        i === currentSlide
+          ? 'slider-navButton slider-navButton--active'
+          : 'slider-navButton';
       return <button className={btnClasses} key={i} />;
     });
     return <div className="slider-nav">{listIndicators}</div>;
@@ -100,13 +118,21 @@ const Slideshow = (props: SlideShow) => {
   return (
     <>
       <div className="slider">
-        <div className="slider-slides">{images && images.length && slideShow && <div className="slider-image" style={{ backgroundImage: `url(${slideShow.url})` }}></div>}</div>
+        <div className="slider-slides">
+          {images && images.length && slideShow && (
+            <div
+              className="slider-image"
+              style={{
+                backgroundImage: `url(${slideShow.url})`
+              }}
+            ></div>
+          )}
+        </div>
         <Indicators currentSlide={slideIndex} />
         {showArrows ? <RenderArrows /> : null}
       </div>
     </>
   );
 };
-
 
 export default Slideshow;

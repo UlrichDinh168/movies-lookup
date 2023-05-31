@@ -1,22 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from '../redux';
+import { RootState } from '../../../redux';
 
-import Slideshow from './SlideShow';
-import Paginate from './Paginate';
-import Grid from './Grid';
-import { IMAGE_URL } from '../services/movies.service';
-import { getMovies, setResponsePageNumber } from '../redux/movie';
-import { ImageObjType } from './Types'
+import Slideshow from '../slideShow/SlideShow';
+import Paginate from '../paginate/Paginate';
+import Grid from '../grid/Grid';
+import { IMAGE_URL } from '../../../services/movies.service';
+import {
+  getMovies,
+  setResponsePageNumber
+} from '../../../redux/movie';
+
+export type ImageObjType = {
+  id: number;
+  url: string;
+};
 
 const MainContent = () => {
-  const { page, totalPages, list, movieType } = useSelector((state: RootState) => state.movie)
+  const { page, totalPages, list, movieType } = useSelector(
+    (state: RootState) => state.movie
+  );
 
   const [currentPage, setCurrentPage] = useState(page);
   const [images, setImages] = useState<ImageObjType[]>([]);
   // The slice() method with no arguments creates a shallow copy of the array, which you can then sort and slice without modifying the original array.
   // Else sort() method is returning a read-only array that cannot be modified by the slice() method.
-  const randomMovies = list?.slice().sort(() => Math.random() - Math.random()).slice(0, 4);
+  const randomMovies = list
+    ?.slice()
+    .sort(() => Math.random() - Math.random())
+    .slice(0, 4);
 
   const HEADER_TYPE: { [key: string]: string } = {
     now_playing: 'Now Playing',
@@ -24,7 +36,6 @@ const MainContent = () => {
     top_rated: 'Top Rated',
     upcoming: 'Upcoming'
   };
-
 
   useEffect(() => {
     if (randomMovies?.length) {
@@ -74,14 +85,16 @@ const MainContent = () => {
       <div className="grid-movie-title">
         <div className="movieType">{HEADER_TYPE[movieType]}</div>
         <div className="paginate">
-          <Paginate currentPage={currentPage} totalPages={totalPages} paginate={paginate} />
+          <Paginate
+            currentPage={currentPage}
+            totalPages={totalPages}
+            paginate={paginate}
+          />
         </div>
       </div>
       <Grid />
     </div>
   );
 };
-
-
 
 export default MainContent;

@@ -1,6 +1,12 @@
 import React, { useState, useEffect, Fragment, useRef } from 'react';
 
-const Rating = ({ rating, totalStars, className }: any) => {
+type RatingType = {
+  rating: number;
+  totalStars: number;
+  className?: string;
+};
+
+const Rating = ({ rating, totalStars, className }: RatingType) => {
   const [numberOfStars, setNumberOfStars] = useState<number[]>([]);
   const ratingRef = useRef<HTMLInputElement | null>(null);
 
@@ -40,6 +46,5 @@ const Rating = ({ rating, totalStars, className }: any) => {
     </div>
   );
 };
-
 
 export default Rating;

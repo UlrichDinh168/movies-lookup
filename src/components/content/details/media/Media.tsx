@@ -1,19 +1,28 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import { IMAGE_URL } from '../services/movies.service';
+import { IMAGE_URL } from '../../../../services/movies.service';
+import {
+  PosterItemType,
+  VideoItemType,
+  VideoType,
+  MediaType
+} from '../../../../redux/types';
 
-const Media = ({ movie }: any) => {
-
-  const [media] = useState(movie[2]);
-  const [videos] = useState(movie[3]);
-
+const Media = ({
+  media,
+  videos
+}: {
+  name?: string;
+  media: MediaType;
+  videos: VideoType;
+}) => {
   return (
     <>
       <div className="media">
         <div>
           <div className="media-title">Watch Trailer</div>
           <div className="media-videos">
-            {videos?.results.map((data: any) => (
+            {videos?.results.map((data: VideoItemType) => (
               <div className="video" key={data.key}>
                 <iframe
                   title="Avengers"
@@ -22,7 +31,6 @@ const Media = ({ movie }: any) => {
                     height: '100%'
                   }}
                   src={`https://www.youtube.com/embed/${data.key}`}
-                  frameBorder="0"
                   allowFullScreen
                 />
               </div>
@@ -30,9 +38,11 @@ const Media = ({ movie }: any) => {
           </div>
         </div>
         <div>
-          <div className="media-title">Photos ({media.posters.length})</div>
+          <div className="media-title">
+            Photos ({media.posters.length})
+          </div>
           <div className="media-images">
-            {media.posters.map((data: any, i: number) => (
+            {media.posters.map((data: PosterItemType, i: number) => (
               <div
                 key={i}
                 className="image-cell"
@@ -47,7 +57,5 @@ const Media = ({ movie }: any) => {
     </>
   );
 };
-
-
 
 export default Media;
