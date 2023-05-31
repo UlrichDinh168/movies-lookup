@@ -28,8 +28,7 @@ export const ErrorSlice = createSlice({
 type ErrorMessage = {
   message: string;
   statusCode: number | null;
-}
-
+};
 
 export const setError = async (errorMsg: ErrorMessage) => {
   if (errorMsg) {
@@ -38,11 +37,10 @@ export const setError = async (errorMsg: ErrorMessage) => {
       statusCode: errorMsg.statusCode
     };
     store.dispatch(_setError(payload));
-
   } else {
-
-    store.dispatch(_setError({ payload: { message: '', statusCode: null } }));
-
+    store.dispatch(
+      _setError({ payload: { message: '', statusCode: null } })
+    );
   }
 };
 

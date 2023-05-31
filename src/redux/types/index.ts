@@ -1,4 +1,3 @@
-import { MovieList } from './MovieListType';
 import {
   primaryDetailsType,
   CrewItemType,
@@ -15,7 +14,6 @@ import {
 } from './MovieType';
 
 export {
-  MovieList,
   primaryDetailsType,
   CrewItemType,
   ReviewResult,

@@ -9,7 +9,7 @@ import Crew from './crew/Crew';
 import Media from './media/Media';
 import Reviews from './reviews/Reviews';
 import Spinner from '../../spinner/Spinner';
-import { movieDetails as getMovieDetails } from '../../../redux/movie'
+import { movieDetails as getMovieDetails } from '../../../redux/movie';
 import { IMAGE_URL } from '../../../services/movies.service';
 import {
   Genre,
@@ -28,17 +28,14 @@ const Details = () => {
   );
 
   const { id } = useParams<{ id?: string }>();
-  const location = useLocation()
+  const location = useLocation();
 
   useEffect(() => {
-    pathURL('/:id/:name/details', location.pathname)
+    pathURL('/:id/:name/details', location.pathname);
     if (id && movie.length === 0) {
-      getMovieDetails(id)
+      getMovieDetails(id);
     }
-  }, [id, movie])
-
-
-
+  }, [id, movie]);
 
   const movieDetails = movie[0] as primaryDetailsType;
 

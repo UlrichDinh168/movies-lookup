@@ -8,7 +8,7 @@ import Main from './components/main/Main';
 import Details from './components/content/details/Details';
 import AppRoutes from './routes';
 import { appRoutes } from './redux/route';
-import { Route } from './redux/types/RouteType'
+import { Route } from './redux/types/RouteType';
 
 const App = () => {
   const effectRan = useRef(false);

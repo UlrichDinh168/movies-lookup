@@ -25,7 +25,7 @@ const Grid = () => {
     return titleStr.replace(/ /g, '-');
   };
 
-  const fetchMovieDetail = async (id: number, title: string) => {
+  const fetchMovieDetail = async (id: string, title: string) => {
     try {
       setLoading(true);
       await movieDetails(id);

@@ -125,7 +125,7 @@ const normalizeError = (error: any) => {
       error.response.data.status_message,
     statusCode: error.response.status
   };
-  store.dispatch(setError(payload));
+  setError(payload);
 };
 
 export const getMovies = async (

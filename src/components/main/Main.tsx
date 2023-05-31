@@ -28,7 +28,6 @@ const Main = () => {
 
   useEffect(() => {
     if (useEffectRan.current === false) {
-
       pathURL(location.pathname, location.pathname);
       setResponsePageNumber(currentPage, totalPages);
     }
