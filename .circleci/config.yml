@@ -13,6 +13,11 @@ executors:
   terraform-executor:
     docker:
       - image: hashicorp/terraform:latest
+  docker-publisher:
+    environment:
+      IMAGE_NAME: ulrich/moviedb
+    docker:
+      - image: circleci/buildpack-deps:stetch
 # ==================================== // ====================================
 aliases:
   - &show-current-branch-name
@@ -118,6 +123,20 @@ jobs:
           root: ./
           paths:
             - artifacts
+  publish-to-docker-hub:
+    executor: docker-publisher
+    steps:
+      - checkout
+      - setup_remote_docker
+      - *restore-cache
+      - run: docker login -u "${DOCKER_HUB_USER}" -p "${DOCKER_HUB_PASSWORD}"
+      - run: docker build --build-arg VITE_API_SECRET=${VITE_API_SECRET} -t ${IMAGE_NAME}:latest .
+      - run:
+          name: Tag and push to docker hub
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]
+            then
+              docker tag ${IMAGE_NAME}:latest ${IMAGE_NAME}:stable-${CIRCLE_BUILD_NUM} && docker push ${IMAGE_NAME}:stable-${CIRCLE_BUILD_NUM}
   deploy-to-aws-s3:
     executor: app-executors
     steps:
@@ -141,7 +160,6 @@ jobs:
             else
               aws --region ${AWS_REGION} s3 sync ~/repo/dist s3://${AWS_BUCKET_NAME} --delete
             fi
-
   deploy-to-aws-cloudfront:
     executor: app-executors
     steps:
@@ -166,7 +184,6 @@ jobs:
             else
               aws cloudfront create-invalidation --distribution-id ${CLOUDFRONT_DISTRIBUTION_ID} --path /\*
             fi
-
   notify-via-slack:
     executor: slack-executor
     steps:
