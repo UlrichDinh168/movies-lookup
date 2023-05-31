@@ -19,7 +19,7 @@ import {
   primaryDetailsType,
   secondaryDetailsType
 } from '../../../redux/types/MovieType';
-import { useLocation, useMatch, useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { pathURL } from '../../../redux/route';
 
 const Details = () => {
