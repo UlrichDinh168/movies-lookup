@@ -20,35 +20,35 @@ export const SEARCH_API_URL = async (query: string) => {
   return response;
 };
 
-export const MOVIE_DETAILS_URL = async (id: number) => {
+export const MOVIE_DETAILS_URL = async (id: number | string) => {
   const response = await axios.get(
     `${REQUEST_URL}/movie/${id}${API_KEY_URL}`
   );
   return response;
 };
 
-export const MOVIE_CREDITS_URL = async (id: number) => {
+export const MOVIE_CREDITS_URL = async (id: number | string) => {
   const response = await axios.get(
     `${REQUEST_URL}/movie/${id}/credits${API_KEY_URL}`
   );
   return response;
 };
 
-export const MOVIE_IMAGES_URL = async (id: number) => {
+export const MOVIE_IMAGES_URL = async (id: number | string) => {
   const response = await axios.get(
     `${REQUEST_URL}/movie/${id}/images${API_KEY_URL}&include_image_language=en`
   );
   return response;
 };
 
-export const MOVIE_VIDEOS_URL = async (id: number) => {
+export const MOVIE_VIDEOS_URL = async (id: number | string) => {
   const response = await axios.get(
     `${REQUEST_URL}/movie/${id}/videos${API_KEY_URL}`
   );
   return response;
 };
 
-export const MOVIE_REVIEWS_URL = async (id: number, page = 1) => {
+export const MOVIE_REVIEWS_URL = async (id: number | string, page = 1) => {
   const response = await axios.get(
     `${REQUEST_URL}/movie/${id}/reviews${API_KEY_URL}&page=${page}`
   );

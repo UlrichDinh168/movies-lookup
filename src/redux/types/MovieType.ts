@@ -169,3 +169,41 @@ export type ReviewItemType = {
   total_pages: number;
   total_results: number;
 };
+
+export type MovieList = {
+  adult: boolean;
+  backdrop_path: string;
+  genre_ids: number[];
+  id: number;
+  original_language: string;
+  original_title: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  release_date: string;
+  title: string;
+  video: boolean;
+  vote_average: number;
+  vote_count: number;
+};
+
+
+export type MoviesType = {
+  list: MovieList[];
+  page: number;
+  totalPages: number;
+  movieType: string;
+  searchQuery: string;
+  searchResult: string[];
+  movie: MovieArray[];
+  loading: boolean;
+};
+
+export type MovieArray =
+  | primaryDetailsType
+  | CastItemType
+  | VideoType
+  | ReviewItemType
+  | LogoItemType
+  | MediaType
+  | secondaryDetailsType;

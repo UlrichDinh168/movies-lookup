@@ -15,7 +15,7 @@ import {
   searchResult,
   clearMovieDetails
 } from '../../redux/movie';
-import { _pathURL } from '../../redux/route';
+import { pathURL } from '../../redux/route';
 import { setError } from '../../redux/error';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux';
@@ -72,10 +72,34 @@ const Header = () => {
   const effectRan = useRef(false);
 
   useEffect(() => {
+    if (routesArray.length) {
+      if (!path && !url) {
+        pathURL('/', '/');
+        const error = new Error(`Page with pathname ${location.pathname} not found with status code 404.`);
+        setError({ message: `Page with pathname ${location.pathname} not found.`, statusCode: 404 });
+        throw error;
+      }
+    }
+    // eslint-disable-next-line
+  }, [path, url, routesArray, pathURL]);
+
+  useEffect(() => {
+    if (message || statusCode) {
+      pathURL('/', '/');
+      const error = new Error(`${message} With status code ${statusCode} `);
+      setError({ message: `Page with pathname ${location.pathname} not found.`, statusCode: 404 });
+      throw error;
+    }
+    // eslint-disable-next-line
+  }, [message, statusCode]);
+
+
+  useEffect(() => {
     if (effectRan.current === false) {
       if (location.pathname && !message && !statusCode) {
         getMovies(type, page);
         setResponsePageNumber(page, totalPages);
+
         if (detailsRoute || location.pathname === '/') {
           setHideHeader(true);
         }
@@ -85,52 +109,13 @@ const Header = () => {
         }
       }
     }
+
     return () => {
       effectRan.current = true;
     };
     // eslint-disable-next-line
   }, [type, disableSearch, location]);
 
-  useEffect(() => {
-    if (effectRan.current === false) {
-      if (routesArray.length === 0) {
-        if (!path && !url) {
-          _pathURL('/', '/');
-
-          // const error = new Error(`Page with pathname ${location.pathname} not found with status code 404.`);
-          setError({
-            message: `Page with pathname ${location.pathname} not found.`,
-            statusCode: 404
-          });
-        }
-      }
-    }
-    return () => {
-      effectRan.current = true;
-    };
-    // eslint-disable-next-line
-  }, [path, url, routesArray]);
-
-  useEffect(() => {
-    if (effectRan.current === false) {
-      if (message || statusCode) {
-        _pathURL('/', '/');
-        const error = new Error(
-          `${message} With status code ${statusCode} `
-        );
-        setError({
-          message: `Page with pathname ${location.pathname} not found.`,
-          statusCode: 404
-        });
-        throw error;
-      }
-    }
-
-    return () => {
-      effectRan.current = true;
-    };
-    // eslint-disable-next-line
-  }, [message, statusCode]);
 
   const setMovieTypeUrl = (type: string) => {
     setDisableSearch(false);
@@ -174,11 +159,10 @@ const Header = () => {
               <img src={logo} alt="" />
             </div>
             <div
-              className={`${
-                isToggle
-                  ? 'header-menu-toggle header-nav-open is-active'
-                  : 'header-menu-toggle'
-              }`}
+              className={`${isToggle
+                ? 'header-menu-toggle header-nav-open is-active'
+                : 'header-menu-toggle'
+                }`}
               id="header-mobile-menu"
               onClick={() => toggleMenu()}
             >
@@ -187,11 +171,10 @@ const Header = () => {
               <span className="bar"></span>
             </div>
             <ul
-              className={`${
-                isToggle
-                  ? 'header-nav header-mobile-nav'
-                  : 'header-nav'
-              }`}
+              className={`${isToggle
+                ? 'header-nav header-mobile-nav'
+                : 'header-nav'
+                }`}
             >
               {HEADER_LIST.map((data) => (
                 <li
@@ -213,9 +196,8 @@ const Header = () => {
                 </li>
               ))}
               <input
-                className={`search-input ${
-                  disableSearch ? 'disabled' : ''
-                }`}
+                className={`search-input ${disableSearch ? 'disabled' : ''
+                  }`}
                 type="text"
                 placeholder="Search for a movie"
                 value={search}
@@ -228,22 +210,5 @@ const Header = () => {
     </>
   );
 };
-
-// Header.propTypes = {
-//   getMovies: PropTypes.func,
-//   setMovieType: PropTypes.func,
-//   searchQuery: PropTypes.func,
-//   searchResult: PropTypes.func,
-//   clearMovieDetails: PropTypes.func,
-//   setResponsePageNumber: PropTypes.func,
-//   page: PropTypes.number,
-//   totalPages: PropTypes.number,
-//   path: PropTypes.string,
-//   url: PropTypes.string,
-//   routesArray: PropTypes.array,
-//   pathURL: PropTypes.func,
-//   setError: PropTypes.func,
-//   errors: PropTypes.object
-// };
 
 export default Header;

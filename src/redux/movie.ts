@@ -7,167 +7,10 @@ import {
   MOVIE_IMAGES_URL,
   MOVIE_VIDEOS_URL,
   MOVIE_REVIEWS_URL
-} from '../services/movies.service.js';
-import { setError } from './error.js';
-import { store } from '../store.js';
-import {
-  MovieList,
-  primaryDetailsType,
-  CastItemType,
-  secondaryDetailsType,
-  ReviewItemType,
-  LogoItemType,
-  MediaType,
-  VideoType
-} from './types';
-
-// export type MovieData = {
-//   adult: boolean;
-//   backdrop_path: string;
-//   belongs_to_collection: null | {
-//     id: number;
-//     name: string;
-//     poster_path: string;
-//     backdrop_path: string;
-//   };
-//   budget: number;
-//   genres: {
-//     id: number;
-//     name: string;
-//   }[];
-//   homepage: string;
-//   id: number;
-//   imdb_id: string;
-//   original_language: string;
-//   original_title: string;
-//   overview: string;
-//   popularity: number;
-//   poster_path: string;
-//   production_companies: {
-//     id: number;
-//     logo_path: string | null;
-//     name: string;
-//     origin_country: string;
-//   }[];
-//   production_countries: {
-//     iso_3166_1: string;
-//     name: string;
-//   }[];
-//   release_date: string;
-//   revenue: number;
-//   runtime: number;
-//   spoken_languages: {
-//     english_name: string;
-//     iso_639_1: string;
-//     name: string;
-//   }[];
-//   status: string;
-//   tagline: string;
-//   title: string;
-//   video: boolean;
-//   vote_average: number;
-//   vote_count: number;
-//   cast: {
-//     adult: boolean;
-//     gender: number;
-//     id: number;
-//     known_for_department: string;
-//     name: string;
-//     original_name: string;
-//     popularity: number;
-//     profile_path: string | null;
-//     cast_id: number;
-//     character: string;
-//     credit_id: string;
-//     order: number;
-//   }[];
-//   crew: {
-//     adult: boolean;
-//     gender: number;
-//     id: number;
-//     known_for_department: string;
-//     name: string;
-//     original_name: string;
-//     popularity: number;
-//     profile_path: string | null;
-//     credit_id: string;
-//     department: string;
-//     job: string;
-//   }[];
-//   backdrops: {
-//     aspect_ratio: number;
-//     height: number;
-//     iso_639_1: string;
-//     file_path: string;
-//     vote_average: number;
-//     vote_count: number;
-//     width: number;
-//   }[];
-//   logos: {
-//     aspect_ratio: number;
-//     height: number;
-//     iso_639_1: string;
-//     file_path: string;
-//     vote_average: number;
-//     vote_count: number;
-//     width: number;
-//   }[];
-//   posters: {
-//     aspect_ratio: number;
-//     height: number;
-//     iso_639_1: string;
-//     file_path: string;
-//     vote_average: number;
-//     vote_count: number;
-//     width: number;
-//   }[];
-//   results: {
-//     iso_639_1: string;
-//     iso_3166_1: string;
-//     name: string;
-//     key: string;
-//     site: string;
-//     size: number;
-//     type: string;
-//     official: boolean;
-//     published_at: string;
-//     id: string;
-//   }[];
-//   page: number;
-//   total_pages: number;
-//   total_results: number;
-//   author: string;
-//   author_details: {
-//     name: string;
-//     username: string;
-//     avatar_path: string | null;
-//     rating: number | null;
-//   };
-//   content: string;
-//   created_at: string;
-//   updated_at: string;
-//   url: string;
-// }
-
-export type MoviesType = {
-  list: MovieList[];
-  page: number;
-  totalPages: number;
-  movieType: string;
-  searchQuery: string;
-  searchResult: string[];
-  movie: MovieArray[];
-  loading: boolean;
-};
-
-type MovieArray =
-  | primaryDetailsType
-  | CastItemType
-  | VideoType
-  | ReviewItemType
-  | LogoItemType
-  | MediaType
-  | secondaryDetailsType;
+} from '../services/movies.service';
+import { setError } from './error';
+import { store } from '../store';
+import { MoviesType } from './types/MovieType';
 
 const initialState = {
   list: [],
@@ -339,7 +182,7 @@ export const searchResult = async (query: any) => {
   }
 };
 
-export const movieDetails = async (id: number) => {
+export const movieDetails = async (id: string) => {
   try {
     const details = await MOVIE_DETAILS_URL(id);
     const credits = await MOVIE_CREDITS_URL(id);

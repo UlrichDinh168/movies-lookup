@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { store } from '../store';
 
 export type Errors = {
   message: '';
@@ -14,7 +15,7 @@ export const ErrorSlice = createSlice({
   name: 'ErrorSlice',
   initialState,
   reducers: {
-    setError: (state, action) => {
+    _setError: (state, action) => {
       return {
         ...state,
         message: action.payload.message,
@@ -24,6 +25,27 @@ export const ErrorSlice = createSlice({
   }
 });
 
+type ErrorMessage = {
+  message: string;
+  statusCode: number | null;
+}
+
+
+export const setError = async (errorMsg: ErrorMessage) => {
+  if (errorMsg) {
+    const payload = {
+      message: errorMsg.message,
+      statusCode: errorMsg.statusCode
+    };
+    store.dispatch(_setError(payload));
+
+  } else {
+
+    store.dispatch(_setError({ payload: { message: '', statusCode: null } }));
+
+  }
+};
+
 export default ErrorSlice.reducer;
 
-export const { setError } = ErrorSlice.actions;
+export const { _setError } = ErrorSlice.actions;

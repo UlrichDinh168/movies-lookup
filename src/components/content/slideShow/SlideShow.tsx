@@ -25,7 +25,9 @@ const Slideshow = (props: SlideShow) => {
     slideIndex: 0
   });
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [sliderInterval, setSliderInterval] = useState<number>(0);
+  const [sliderInterval, setSliderInterval] = useState<
+    NodeJS.Timeout | number
+  >(0);
 
   const { slideShow, slideIndex } = state;
 

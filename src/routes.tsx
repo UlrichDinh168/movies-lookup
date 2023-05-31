@@ -1,17 +1,17 @@
 import React from 'react';
 import { useRoutes } from 'react-router-dom';
-import Details from './components/content/details/Details.tsx';
-import Main from './components/main/Main.tsx';
+import Details from './components/content/details/Details';
+import Main from './components/main/Main';
 
-const AppRoutes = () => {
+const AppRoutes = (props: any) => {
   const elements = useRoutes([
     {
       path: '/',
-      element: <Main />
+      element: <Main {...props} />
     },
     {
       path: '/:id/:name/details',
-      element: <Details />
+      element: <Details {...props} />
     }
   ]);
   return elements;

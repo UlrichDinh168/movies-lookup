@@ -9,7 +9,6 @@ type ErrorPageProps = {
 
 const ErrorPage: React.FC<ErrorPageProps> = ({ clearState }) => {
   const navigate = useNavigate();
-  // const { message,statusCode } = useSelector((state: RootState) => state.error)
 
   const navigateToHomePage = () => {
     setError({ message: '', statusCode: null });

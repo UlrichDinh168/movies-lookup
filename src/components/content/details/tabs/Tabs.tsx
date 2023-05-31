@@ -27,7 +27,6 @@ const Tabs = (props: TabsProps) => {
     }
   }, [children]);
 
-  console.log(children, 'children');
 
   const onClickTabItem = (tab: string) => {
     setActiveTab(tab);

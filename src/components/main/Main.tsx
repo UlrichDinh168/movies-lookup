@@ -9,12 +9,13 @@ import {
   loadMoreMovies,
   setResponsePageNumber
 } from '../../redux/movie';
-import { _pathURL } from '../../redux/route';
+import { pathURL } from '../../redux/route';
 import SearchResult from '../content/searchResult/SearchResult';
 
 const Main = () => {
   const { page, totalPages, searchResult, movieType, loading } =
     useSelector((state: RootState) => state.movie);
+
   const { message, statusCode } = useSelector(
     (state: RootState) => state.error
   );
@@ -27,8 +28,8 @@ const Main = () => {
 
   useEffect(() => {
     if (useEffectRan.current === false) {
-      _pathURL(location.pathname, location.pathname);
 
+      pathURL(location.pathname, location.pathname);
       setResponsePageNumber(currentPage, totalPages);
     }
 
