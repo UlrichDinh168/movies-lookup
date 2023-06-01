@@ -167,11 +167,10 @@ const Header = () => {
               <img src={logo} alt="" />
             </div>
             <div
-              className={`${
-                isToggle
-                  ? 'header-menu-toggle header-nav-open is-active'
-                  : 'header-menu-toggle'
-              }`}
+              className={`${isToggle
+                ? 'header-menu-toggle header-nav-open is-active'
+                : 'header-menu-toggle'
+                }`}
               id="header-mobile-menu"
               onClick={() => toggleMenu()}
             >
@@ -180,11 +179,10 @@ const Header = () => {
               <span className="bar"></span>
             </div>
             <ul
-              className={`${
-                isToggle
-                  ? 'header-nav header-mobile-nav'
-                  : 'header-nav'
-              }`}
+              className={`${isToggle
+                ? 'header-nav header-mobile-nav'
+                : 'header-nav'
+                }`}
             >
               {HEADER_LIST.map((data) => (
                 <li
@@ -206,9 +204,8 @@ const Header = () => {
                 </li>
               ))}
               <input
-                className={`search-input ${
-                  disableSearch ? 'disabled' : ''
-                }`}
+                className={`search-input ${disableSearch ? 'disabled' : ''
+                  }`}
                 type="text"
                 placeholder="Search for a movie"
                 value={search}

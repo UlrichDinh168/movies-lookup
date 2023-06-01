@@ -23,7 +23,7 @@
   "plugins": ["react", "@typescript-eslint", "import"],
   "rules": {
     "valid-typeof": "error",
-    "semi": "warn",
+    "semi": "off",
     "no-console": "error",
     "no-var": "error",
     "prefer-const": "error",
