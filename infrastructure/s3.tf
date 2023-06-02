@@ -6,19 +6,20 @@ resource "aws_s3_bucket" "movies_react_s3_bucket" {
   tags = local.common_tags
 }
 
+
+resource "aws_s3_bucket_acl" "movies_react_bucket_acl" {
+  bucket = aws_s3_bucket.movies_react_s3_bucket.id
+  acl    = "private"
+  depends_on = [aws_s3_bucket_ownership_controls.movies_react_s3_bucket_acl_ownership]
+}
+
 // Avoid Error: error creating S3 bucket ACL for bucket-name: AccessControlListNotSupported
-resource "aws_s3_bucket_ownership_controls" "movies_react_bucket_acl" {
+resource "aws_s3_bucket_ownership_controls" "movies_react_s3_bucket_acl_ownership" {
   bucket = aws_s3_bucket.movies_react_s3_bucket.id
   rule {
     object_ownership = "BucketOwnerPreferred"
   }
 }
-resource "aws_s3_bucket_acl" "movies_react_bucket_acl" {
-  bucket = aws_s3_bucket.movies_react_s3_bucket.id
-  acl    = "private"
-}
-
-
 
 resource "aws_s3_bucket_public_access_block" "public_block" {
   bucket = aws_s3_bucket.movies_react_s3_bucket.id
