@@ -33,7 +33,6 @@ const Details = () => {
   useEffect(() => {
     pathURL('/:id/:name/details', location.pathname);
     if (id && movie.length === 0) {
-
       getMovieDetails(Number(id));
     }
   }, [id, movie]);

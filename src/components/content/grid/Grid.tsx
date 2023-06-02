@@ -41,23 +41,25 @@ const Grid = () => {
     <>
       <div className="grid">
         {movieData?.map((data: MovieList) => (
-          <div key={uuidv4()}>
+          <div className='grid-container' key={uuidv4()} onClick={() =>
+            fetchMovieDetail(data.id, data.title)
+          }>
             <LazyImage
               className="grid-cell"
               src={`${IMAGE_URL}${data.poster_path}`}
               alt="placeholder"
             >
-              <div className="grid-read-more">
+              {/* <div className="grid-read-more">
                 <button
                   className="grid-cell-button"
                   onClick={() =>
                     fetchMovieDetail(data.id, data.title)
                   }
                 >
-                  {/* <Link to={`/${data.id}/${formatMovieTitle(data.title)}/details`}>Read More</Link> */}
+                  <Link to={`/${data.id}/${formatMovieTitle(data.title)}/details`}>Read More</Link>
                   Read more
                 </button>
-              </div>
+              </div> */}
               <div className="grid-detail">
                 <span className="grid-detail-title">
                   {data.title}
