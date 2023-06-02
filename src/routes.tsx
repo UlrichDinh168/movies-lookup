@@ -3,15 +3,15 @@ import { useRoutes } from 'react-router-dom';
 import Details from './components/content/details/Details';
 import Main from './components/main/Main';
 
-const AppRoutes = (props: any) => {
+const AppRoutes = () => {
   const elements = useRoutes([
     {
       path: '/',
-      element: <Main {...props} />
+      element: <Main />
     },
     {
       path: '/:id/:name/details',
-      element: <Details {...props} />
+      element: <Details />
     }
   ]);
   return elements;

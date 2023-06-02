@@ -1,14 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, ReactNode } from 'react';
 
 import placeHolder from '/assets/lazy_loader.gif';
 
-const LazyImage = (props: any) => {
+type LazyImageType = {
+  src: string;
+  children: ReactNode;
+  className: string;
+};
+const LazyImage = (props: LazyImageType) => {
   const { src, children, className } = props;
   const [imageSrc, setImageSrc] = useState(placeHolder);
-  const [imageRef, setImageRef] = useState<any>();
+  const [imageRef, setImageRef] = useState<HTMLDivElement | null>(
+    null
+  );
 
   useEffect(() => {
-    let observer: any;
+    let observer: IntersectionObserver;
     let didCancel = false;
 
     if (imageRef && imageSrc !== src) {
@@ -39,7 +46,7 @@ const LazyImage = (props: any) => {
     return () => {
       didCancel = true;
       if (observer && observer.unobserve) {
-        observer.unobserve(imageRef);
+        observer.unobserve(imageRef as Element);
       }
     };
   }, [src, imageSrc, imageRef]);
@@ -58,12 +65,5 @@ const LazyImage = (props: any) => {
     </>
   );
 };
-
-// LazyImage.propTypes = {
-//   src: PropTypes.string,
-//   alt: PropTypes.string,
-//   children: PropTypes.any,
-//   className: PropTypes.any
-// };
 
 export default LazyImage;

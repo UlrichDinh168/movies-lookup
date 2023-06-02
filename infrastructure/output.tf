@@ -1,5 +1,5 @@
-output "journey_react_bucket_name" {
-  value = aws_s3_bucket.journey_react_s3_bucket.id
+output "movies_react_bucket_name" {
+  value = aws_s3_bucket.movies_react_s3_bucket.id
 }
 
 output "cloudfront_distribution_id" {

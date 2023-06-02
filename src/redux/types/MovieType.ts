@@ -193,7 +193,7 @@ export type MoviesType = {
   totalPages: number;
   movieType: string;
   searchQuery: string;
-  searchResult: string[];
+  searchResult: MovieList[];
   movie: MovieArray[];
   loading: boolean;
 };
