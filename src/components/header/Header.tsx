@@ -71,6 +71,7 @@ const Header = () => {
 
   const effectRan = useRef(false);
 
+  // check users enter invalid paths
   useEffect(() => {
     if (routesArray.length) {
       if (!path && !url) {
@@ -88,6 +89,7 @@ const Header = () => {
     // eslint-disable-next-line
   }, [path, url, routesArray, pathURL]);
 
+  // check if there're any error while calling APIs
   useEffect(() => {
     if (message || statusCode) {
       pathURL('/', '/');
@@ -103,6 +105,7 @@ const Header = () => {
     // eslint-disable-next-line
   }, [message, statusCode]);
 
+  // Disable header when error appears
   useEffect(() => {
     if (effectRan.current === false) {
       if (location.pathname && !message && !statusCode) {

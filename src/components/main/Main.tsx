@@ -73,7 +73,7 @@ const Main = () => {
               {searchResult?.length === 0 ? (
                 <MainContent />
               ) : (
-                <SearchResult />
+                <SearchResult searchResult={searchResult} />
               )}
             </>
           )}

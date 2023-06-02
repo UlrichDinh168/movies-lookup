@@ -168,7 +168,7 @@ export const loadMoreMovies = async (
   }
 };
 
-export const searchResult = async (query: any) => {
+export const searchResult = async (query: string) => {
   try {
     if (query) {
       const movies = await SEARCH_API_URL(query);
