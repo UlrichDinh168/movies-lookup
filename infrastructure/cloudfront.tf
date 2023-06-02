@@ -3,7 +3,7 @@ resource "aws_cloudfront_origin_access_identity" "movies_react_origin_access" {
 }
 
 resource "aws_cloudfront_distribution" "s3_distribution" {
-  retain_on_delete    = false 
+  retain_on_delete    = false
   price_class         = "PriceClass_All" #use all edge locations
   enabled             = true
   is_ipv6_enabled     = false
