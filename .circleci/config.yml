@@ -245,18 +245,6 @@ jobs:
                 }
               ]
             }
-  terraform-destroy:
-    executor: terraform-executor
-    steps:
-      - checkout
-      - *show-current-branch-name
-      - run:
-          name: Terraform Destroy
-          command: |
-            cd infrastructure/
-            terraform init
-            terraform workspace select ${CIRCLE_BRANCH} || terraform workspace new ${CIRCLE_BRANCH}
-            terraform destroy --auto-approve
 # ==================================== // ====================================
 workflows:
   build_and_deploy:
@@ -311,13 +299,6 @@ workflows:
       - notify-via-slack:
           requires:
             - deploy-to-aws-cloudfront
-          filters:
-            branches:
-              only:
-                - develop
-                - staging
-                - master
-      - terraform-destroy:
           filters:
             branches:
               only:
