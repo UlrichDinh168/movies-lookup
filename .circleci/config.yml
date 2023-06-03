@@ -13,6 +13,11 @@ executors:
   terraform-executor:
     docker:
       - image: hashicorp/terraform:latest
+  docker-publisher:
+    environment:
+      IMAGE_NAME: ulrich/moviedb
+    docker:
+      - image: circleci/buildpack-deps:stetch
 # ==================================== // ====================================
 aliases:
   - &show-current-branch-name
@@ -112,12 +117,26 @@ jobs:
             cd artifacts/infrastructure/
             terraform workspace select ${CIRCLE_BRANCH}
             terraform apply --auto-approve
-            terraform output journey_react_bucket_name > ../journey_react_bucket_name.txt
+            terraform output movies_react_bucket_name > ../movies_react_bucket_name.txt
             terraform output cloudfront_distribution_id > ../cloudfront_distribution_id.txt
       - persist_to_workspace:
           root: ./
           paths:
             - artifacts
+  publish-to-docker-hub:
+    executor: docker-publisher
+    steps:
+      - checkout
+      - setup_remote_docker
+      - *restore-cache
+      - run: docker login -u "${DOCKER_HUB_USER}" -p "${DOCKER_HUB_PASSWORD}"
+      - run: docker build --build-arg VITE_API_SECRET=${VITE_API_SECRET} -t ${IMAGE_NAME}:latest .
+      - run:
+          name: Tag and push to docker hub
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]
+            then
+              docker tag ${IMAGE_NAME}:latest ${IMAGE_NAME}:stable-${CIRCLE_BUILD_NUM} && docker push ${IMAGE_NAME}:stable-${CIRCLE_BUILD_NUM}
   deploy-to-aws-s3:
     executor: app-executors
     steps:
@@ -130,7 +149,7 @@ jobs:
       - run:
           name: Deploy to AWS s3
           command: |
-            AWS_BUCKET_NAME=$(cat artifacts/journey_react_bucket_name.txt | sed 's/\"//g')
+            AWS_BUCKET_NAME=$(cat artifacts/movies_react_bucket_name.txt | sed 's/\"//g')
             echo $AWS_BUCKET_NAME
             if [ "${CIRCLE_BRANCH}" == "master" ]
             then
@@ -141,7 +160,6 @@ jobs:
             else
               aws --region ${AWS_REGION} s3 sync ~/repo/dist s3://${AWS_BUCKET_NAME} --delete
             fi
-
   deploy-to-aws-cloudfront:
     executor: app-executors
     steps:
@@ -166,7 +184,6 @@ jobs:
             else
               aws cloudfront create-invalidation --distribution-id ${CLOUDFRONT_DISTRIBUTION_ID} --path /\*
             fi
-
   notify-via-slack:
     executor: slack-executor
     steps:
@@ -228,18 +245,6 @@ jobs:
                 }
               ]
             }
-  terraform-destroy:
-    executor: terraform-executor
-    steps:
-      - checkout
-      - *show-current-branch-name
-      - run:
-          name: Terraform Destroy
-          command: |
-            cd infrastructure/
-            terraform init
-            terraform workspace select ${CIRCLE_BRANCH} || terraform workspace new ${CIRCLE_BRANCH}
-            terraform destroy --auto-approve
 # ==================================== // ====================================
 workflows:
   build_and_deploy:
@@ -294,19 +299,6 @@ workflows:
       - notify-via-slack:
           requires:
             - deploy-to-aws-cloudfront
-          filters:
-            branches:
-              only:
-                - develop
-                - staging
-                - master
-      - hold:
-          type: approval
-          requires:
-            - deploy-to-aws-cloudfront
-      - terraform-destroy:
-          requires:
-            - hold
           filters:
             branches:
               only:

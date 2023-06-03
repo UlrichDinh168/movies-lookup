@@ -101,10 +101,6 @@ export const {
   _setLoading
 } = MoviesSlice.actions;
 
-// const dispatchMethod = <T>(type: string, payload: T, dispatch: AppDispatch): void => {
-//   dispatch({ type, payload });
-// };
-
 export const getMoviesRequest = async (
   type: string,
   pageNumber: number
@@ -125,7 +121,7 @@ const normalizeError = (error: any) => {
       error.response.data.status_message,
     statusCode: error.response.status
   };
-  store.dispatch(setError(payload));
+  setError(payload);
 };
 
 export const getMovies = async (
@@ -168,7 +164,7 @@ export const loadMoreMovies = async (
   }
 };
 
-export const searchResult = async (query: any) => {
+export const searchResult = async (query: string) => {
   try {
     if (query) {
       const movies = await SEARCH_API_URL(query);
@@ -182,7 +178,7 @@ export const searchResult = async (query: any) => {
   }
 };
 
-export const movieDetails = async (id: string) => {
+export const movieDetails = async (id: number) => {
   try {
     const details = await MOVIE_DETAILS_URL(id);
     const credits = await MOVIE_CREDITS_URL(id);

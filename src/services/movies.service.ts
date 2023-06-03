@@ -48,7 +48,10 @@ export const MOVIE_VIDEOS_URL = async (id: number | string) => {
   return response;
 };
 
-export const MOVIE_REVIEWS_URL = async (id: number | string, page = 1) => {
+export const MOVIE_REVIEWS_URL = async (
+  id: number | string,
+  page = 1
+) => {
   const response = await axios.get(
     `${REQUEST_URL}/movie/${id}/reviews${API_KEY_URL}&page=${page}`
   );

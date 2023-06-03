@@ -187,14 +187,13 @@ export type MovieList = {
   vote_count: number;
 };
 
-
 export type MoviesType = {
   list: MovieList[];
   page: number;
   totalPages: number;
   movieType: string;
   searchQuery: string;
-  searchResult: string[];
+  searchResult: MovieList[];
   movie: MovieArray[];
   loading: boolean;
 };

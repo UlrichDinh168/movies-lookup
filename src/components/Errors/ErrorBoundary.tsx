@@ -4,16 +4,18 @@ import ErrorPage from './ErrorPage';
 type ErrorBoundaryProps = {
   children: React.ReactNode;
   fallback: React.ReactNode;
-}
+};
 
 type ErrorBoundaryState = {
   error: Error | null;
   errorInfo: ErrorInfo | null;
   eventId: string | null;
-}
+};
 
-
-class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+class ErrorBoundary extends Component<
+  ErrorBoundaryProps,
+  ErrorBoundaryState
+> {
   constructor(props: ErrorBoundaryProps) {
     super(props);
     this.state = {
@@ -41,7 +43,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
     if (this.state.error) {
       return <ErrorPage clearState={this.clearState} />;
     }
-    return this.props.children
+    return this.props.children;
   }
 }
 

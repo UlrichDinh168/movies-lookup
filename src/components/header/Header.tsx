@@ -71,29 +71,41 @@ const Header = () => {
 
   const effectRan = useRef(false);
 
+  // check users enter invalid paths
   useEffect(() => {
     if (routesArray.length) {
       if (!path && !url) {
         pathURL('/', '/');
-        const error = new Error(`Page with pathname ${location.pathname} not found with status code 404.`);
-        setError({ message: `Page with pathname ${location.pathname} not found.`, statusCode: 404 });
+        const error = new Error(
+          `Page with pathname ${location.pathname} not found with status code 404.`
+        );
+        setError({
+          message: `Page with pathname ${location.pathname} not found.`,
+          statusCode: 404
+        });
         throw error;
       }
     }
     // eslint-disable-next-line
   }, [path, url, routesArray, pathURL]);
 
+  // check if there're any error while calling APIs
   useEffect(() => {
     if (message || statusCode) {
       pathURL('/', '/');
-      const error = new Error(`${message} With status code ${statusCode} `);
-      setError({ message: `Page with pathname ${location.pathname} not found.`, statusCode: 404 });
+      const error = new Error(
+        `${message} With status code ${statusCode} `
+      );
+      setError({
+        message: `Page with pathname ${location.pathname} not found.`,
+        statusCode: 404
+      });
       throw error;
     }
     // eslint-disable-next-line
   }, [message, statusCode]);
 
-
+  // Disable header when error appears
   useEffect(() => {
     if (effectRan.current === false) {
       if (location.pathname && !message && !statusCode) {
@@ -115,7 +127,6 @@ const Header = () => {
     };
     // eslint-disable-next-line
   }, [type, disableSearch, location]);
-
 
   const setMovieTypeUrl = (type: string) => {
     setDisableSearch(false);
@@ -159,10 +170,11 @@ const Header = () => {
               <img src={logo} alt="" />
             </div>
             <div
-              className={`${isToggle
-                ? 'header-menu-toggle header-nav-open is-active'
-                : 'header-menu-toggle'
-                }`}
+              className={`${
+                isToggle
+                  ? 'header-menu-toggle header-nav-open is-active'
+                  : 'header-menu-toggle'
+              }`}
               id="header-mobile-menu"
               onClick={() => toggleMenu()}
             >
@@ -171,10 +183,11 @@ const Header = () => {
               <span className="bar"></span>
             </div>
             <ul
-              className={`${isToggle
-                ? 'header-nav header-mobile-nav'
-                : 'header-nav'
-                }`}
+              className={`${
+                isToggle
+                  ? 'header-nav header-mobile-nav'
+                  : 'header-nav'
+              }`}
             >
               {HEADER_LIST.map((data) => (
                 <li
@@ -196,8 +209,9 @@ const Header = () => {
                 </li>
               ))}
               <input
-                className={`search-input ${disableSearch ? 'disabled' : ''
-                  }`}
+                className={`search-input ${
+                  disableSearch ? 'disabled' : ''
+                }`}
                 type="text"
                 placeholder="Search for a movie"
                 value={search}

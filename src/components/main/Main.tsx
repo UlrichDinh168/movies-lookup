@@ -28,7 +28,6 @@ const Main = () => {
 
   useEffect(() => {
     if (useEffectRan.current === false) {
-
       pathURL(location.pathname, location.pathname);
       setResponsePageNumber(currentPage, totalPages);
     }
@@ -74,7 +73,7 @@ const Main = () => {
               {searchResult?.length === 0 ? (
                 <MainContent />
               ) : (
-                <SearchResult />
+                <SearchResult searchResult={searchResult} />
               )}
             </>
           )}

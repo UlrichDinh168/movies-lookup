@@ -1,9 +1,9 @@
 variable "prefix" {
-  default = "journey-react"
+  default = "movies-react"
 }
 
 variable "project" {
-  default = "journey-react"
+  default = "movies-react"
 }
 
 variable "custom_error_response" {

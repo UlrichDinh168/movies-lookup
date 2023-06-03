@@ -59,12 +59,10 @@ const MainContent = () => {
       ];
       setImages(IMAGES);
     }
-    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
     setCurrentPage(page);
-    // eslint-disable-next-line
   }, [page, totalPages]);
 
   const paginate = (type: string) => {

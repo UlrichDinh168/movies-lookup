@@ -1,4 +1,3 @@
-import { MovieList } from './MovieListType';
 import {
   primaryDetailsType,
   CrewItemType,
@@ -11,11 +10,11 @@ import {
   ReviewResult,
   VideoType,
   MediaType,
-  secondaryDetailsType
+  secondaryDetailsType,
+  MovieList
 } from './MovieType';
 
 export {
-  MovieList,
   primaryDetailsType,
   CrewItemType,
   ReviewResult,
@@ -27,5 +26,6 @@ export {
   BackdropItemType,
   VideoType,
   MediaType,
-  secondaryDetailsType
+  secondaryDetailsType,
+  MovieList
 };

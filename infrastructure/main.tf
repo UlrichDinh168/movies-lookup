@@ -1,12 +1,12 @@
 provider "aws" {
-  region  = "eu-north-1"
+  region = "eu-north-1"
   # profile = "ulrich"
 }
 
 terraform {
   backend "s3" {
-    bucket  = "journey-tf-state"
-    key     = "journey.tfstate"
+    bucket  = "movies-tf-state"
+    key     = "movies.tfstate"
     region  = "eu-north-1"
     encrypt = true
   }
