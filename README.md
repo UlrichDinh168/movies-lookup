@@ -1,6 +1,9 @@
 # Movies lookup
 
-# Live demo: https://movies-lookup.netlify.app/
+# Live demo:
+
+- **Netlify**: https://movies-lookup.netlify.app/
+- **AWS Cloudfront**: https://d10q0qg2u0uitv.cloudfront.net/
 
 ## Introduction
 

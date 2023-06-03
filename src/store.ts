@@ -1,27 +1,22 @@
-import { configureStore, Action } from '@reduxjs/toolkit';
+import {
+  configureStore,
+  Action,
+  ThunkMiddleware
+} from '@reduxjs/toolkit';
 import { rootReducer, RootState } from './redux/index.js';
-import { useDispatch } from 'react-redux';
 import logger from 'redux-logger';
-import thunk, { ThunkAction } from 'redux-thunk';
+import thunk from 'redux-thunk';
 
-// const baseURL = BACKEND_BASE_URL || "http://localhost:8000";
-// const baseURL = "http://localhost:8000";
+// Middleware configuration
+const middleware: ThunkMiddleware<RootState, Action>[] = [thunk];
 
-export type AppDispatch = typeof store.dispatch;
-export type AppThunk<ReturnType = void> = ThunkAction<
-  ReturnType,
-  RootState,
-  null,
-  Action<string>
->;
-
-export const useAppDispatch = () => useDispatch<AppDispatch>();
+if (import.meta.env.DEV) {
+  middleware.push(logger);
+}
 
 // Create redux store
 export const store = configureStore({
   reducer: rootReducer,
-  middleware: [thunk, logger],
-  devTools: true
+  middleware,
+  devTools: import.meta.env.DEV
 });
-
-// import.meta.env.NODE_ENV !== 'production'

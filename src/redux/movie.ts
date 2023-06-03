@@ -101,10 +101,6 @@ export const {
   _setLoading
 } = MoviesSlice.actions;
 
-// const dispatchMethod = <T>(type: string, payload: T, dispatch: AppDispatch): void => {
-//   dispatch({ type, payload });
-// };
-
 export const getMoviesRequest = async (
   type: string,
   pageNumber: number
